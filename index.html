@@ -4,521 +4,1336 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Playon – Turf & Sports Booking</title>
-  <meta
-    name="description"
-    content="Book football and cricket turfs instantly with Playon. Find nearby sports grounds, check live slot availability, and make secure bookings online."
-  />
-
+  <meta name="description" content="Book football and cricket turfs instantly with Playon. Find nearby sports grounds, check live slot availability, and make secure bookings online." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
+    :root {
+      --black:   #080C0A;
+      --white:   #F5F7F5;
+      --green:   #22C55E;
+      --green2:  #16A34A;
+      --green-dim: rgba(34,197,94,0.12);
+      --green-glow: rgba(34,197,94,0.35);
+      --gray:    #1A1F1C;
+      --gray2:   #252B27;
+      --text-sub: #8A9690;
+      --border:  rgba(255,255,255,0.07);
     }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    html { scroll-behavior: smooth; }
 
     body {
-      background: #041126;
-      color: white;
+      background: var(--black);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
     }
 
-    .container {
-      width: 90%;
-      max-width: 1200px;
-      margin: auto;
-    }
+    a { text-decoration: none; color: inherit; }
 
+    .container { width: 92%; max-width: 1160px; margin: auto; }
+
+    /* ══════════════════════════════════════
+       NAV
+    ══════════════════════════════════════ */
     header {
       position: sticky;
       top: 0;
-      z-index: 1000;
-      background: rgba(4, 17, 38, 0.9);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      z-index: 100;
+      padding: 0;
     }
 
     nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 18px 0;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      background: rgba(8,12,10,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .nav-inner {
+      width: 92%;
+      max-width: 1160px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .logo {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
-    .logo img {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
+    .logo-mark {
+      width: 38px;
+      height: 38px;
+      background: var(--green);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 900;
+      color: #000;
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 0;
+      flex-shrink: 0;
     }
 
-    .logo h1 {
-      font-size: 28px;
-      font-weight: 800;
-      background: linear-gradient(90deg, #0A4DFF, #20C933);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .logo-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px;
+      letter-spacing: 2px;
+      color: var(--white);
     }
 
     .nav-links {
       display: flex;
-      gap: 28px;
+      gap: 32px;
+      font-size: 14px;
       font-weight: 500;
+      color: var(--text-sub);
     }
 
-    .nav-links a:hover {
-      color: #20C933;
+    .nav-links a:hover { color: var(--green); transition: color 0.2s; }
+
+    .nav-cta {
+      background: var(--green);
+      color: #000;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 10px 20px;
+      border-radius: 10px;
+      transition: 0.2s;
     }
 
+    .nav-cta:hover { background: #16a34a; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    /* ══════════════════════════════════════
+       HERO
+    ══════════════════════════════════════ */
     .hero {
-      padding: 90px 0 80px;
+      padding: 80px 0 60px;
       position: relative;
       overflow: hidden;
     }
 
-    .hero::before {
-      content: '';
+    /* Green glow blobs */
+    .blob {
       position: absolute;
-      width: 500px;
-      height: 500px;
-      background: rgba(10,77,255,0.25);
       border-radius: 50%;
-      filter: blur(120px);
-      top: -150px;
-      left: -100px;
+      filter: blur(100px);
+      pointer-events: none;
     }
 
-    .hero::after {
-      content: '';
-      position: absolute;
-      width: 400px;
-      height: 400px;
-      background: rgba(32,201,51,0.2);
-      border-radius: 50%;
-      filter: blur(120px);
-      right: -100px;
-      bottom: -100px;
+    .blob-1 {
+      width: 400px; height: 400px;
+      background: rgba(34,197,94,0.15);
+      top: -100px; left: -100px;
     }
 
-    .hero-content {
+    .blob-2 {
+      width: 300px; height: 300px;
+      background: rgba(34,197,94,0.10);
+      bottom: -50px; right: -80px;
+    }
+
+    .hero-inner {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      align-items: center;
       gap: 60px;
+      align-items: center;
       position: relative;
       z-index: 2;
     }
 
-    .hero-text h2 {
-      font-size: 68px;
-      line-height: 1.05;
-      font-weight: 800;
+    /* Live badge */
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green-dim);
+      border: 1px solid rgba(34,197,94,0.25);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--green);
       margin-bottom: 24px;
+      animation: fadeUp 0.6s ease both;
     }
 
-    .hero-text h2 span {
-      color: #20C933;
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
     }
 
-    .hero-text p {
-      color: #c6d0df;
-      font-size: 18px;
-      line-height: 1.8;
-      margin-bottom: 35px;
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
     }
 
-    .hero-buttons {
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(64px, 8vw, 100px);
+      line-height: 0.95;
+      letter-spacing: 2px;
+      margin-bottom: 24px;
+      animation: fadeUp 0.7s ease 0.1s both;
+    }
+
+    .hero-title .accent { color: var(--green); }
+
+    .hero-sub {
+      font-size: 16px;
+      color: var(--text-sub);
+      line-height: 1.75;
+      margin-bottom: 36px;
+      max-width: 420px;
+      animation: fadeUp 0.7s ease 0.2s both;
+    }
+
+    .hero-actions {
       display: flex;
-      gap: 18px;
+      gap: 14px;
       flex-wrap: wrap;
+      animation: fadeUp 0.7s ease 0.3s both;
     }
 
-    .btn {
+    .btn-main {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green);
+      color: #000;
+      font-weight: 700;
+      font-size: 15px;
       padding: 16px 28px;
       border-radius: 14px;
+      transition: 0.25s;
+      box-shadow: 0 0 30px var(--green-glow);
+    }
+
+    .btn-main:hover { background: #16a34a; transform: translateY(-2px); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--white);
       font-weight: 600;
-      transition: 0.3s ease;
-      display: inline-block;
+      font-size: 15px;
+      padding: 15px 24px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      transition: 0.25s;
     }
 
-    .btn-primary {
-      background: linear-gradient(90deg, #0A4DFF, #20C933);
-      color: white;
-      box-shadow: 0 10px 30px rgba(10,77,255,0.35);
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.04); }
+
+    /* Hero image side */
+    .hero-visual {
+      position: relative;
+      animation: fadeUp 0.8s ease 0.2s both;
     }
 
-    .btn-primary:hover {
-      transform: translateY(-3px);
+    .phone-wrap {
+      position: relative;
+      width: fit-content;
+      margin: auto;
     }
 
-    .btn-secondary {
-      border: 1px solid rgba(255,255,255,0.2);
-      background: rgba(255,255,255,0.05);
+    .phone-frame {
+      width: 260px;
+      background: var(--gray);
+      border-radius: 40px;
+      border: 2px solid rgba(255,255,255,0.1);
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
+      position: relative;
+      z-index: 2;
+      margin: auto;
     }
 
-    .hero-image {
-      text-align: center;
-    }
-
-    .hero-image img {
+    .phone-screen {
       width: 100%;
-      max-width: 480px;
-      border-radius: 34px;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+      aspect-ratio: 9/18;
+      background: linear-gradient(160deg, #0f1812 0%, #080C0A 60%);
+      display: flex;
+      flex-direction: column;
+      padding: 28px 16px 20px;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
     }
 
+    /* Notch */
+    .phone-screen::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 90px; height: 22px;
+      background: var(--black);
+      border-radius: 0 0 16px 16px;
+      z-index: 10;
+    }
+
+    .app-header-sim {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .app-header-sim .app-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      letter-spacing: 2px;
+      color: var(--white);
+    }
+
+    .notif-dot {
+      width: 28px; height: 28px;
+      background: var(--gray2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+    }
+
+    .search-bar-sim {
+      background: var(--gray2);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 11px;
+      color: var(--text-sub);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .turf-card-sim {
+      background: var(--gray2);
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .turf-img-sim {
+      width: 100%;
+      height: 80px;
+      background: linear-gradient(135deg, #1a2e1e, #0d1a10);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+
+    .turf-info-sim {
+      padding: 8px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .turf-name-sim {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .turf-price-sim {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    .turf-loc-sim {
+      font-size: 9px;
+      color: var(--text-sub);
+      margin-top: 1px;
+    }
+
+    .slots-row-sim {
+      display: flex;
+      gap: 5px;
+    }
+
+    .slot-sim {
+      flex: 1;
+      padding: 5px 0;
+      border-radius: 6px;
+      background: rgba(34,197,94,0.15);
+      border: 1px solid rgba(34,197,94,0.2);
+      font-size: 8px;
+      text-align: center;
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    .slot-sim.taken {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.06);
+      color: var(--text-sub);
+    }
+
+    /* Floating cards around phone */
+    .float-card {
+      position: absolute;
+      background: var(--gray2);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-size: 12px;
+      z-index: 3;
+      backdrop-filter: blur(10px);
+      white-space: nowrap;
+    }
+
+    .float-card-1 {
+      top: 20%;
+      right: -10px;
+      animation: floatY 3s ease-in-out infinite;
+    }
+
+    .float-card-2 {
+      bottom: 25%;
+      left: -20px;
+      animation: floatY 3.5s ease-in-out infinite 0.5s;
+    }
+
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .float-label {
+      font-size: 10px;
+      color: var(--text-sub);
+      margin-bottom: 2px;
+    }
+
+    .float-value {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--green);
+    }
+
+    /* Stats strip */
+    .stats-strip {
+      display: flex;
+      gap: 0;
+      margin-top: 48px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      z-index: 2;
+      animation: fadeUp 0.7s ease 0.4s both;
+    }
+
+    .stat-item {
+      flex: 1;
+      padding: 20px 16px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+
+    .stat-item:last-child { border-right: none; }
+
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      letter-spacing: 1px;
+      color: var(--green);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--text-sub);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    /* ══════════════════════════════════════
+       MARQUEE / SPORTS TICKER
+    ══════════════════════════════════════ */
+    .ticker-wrap {
+      padding: 20px 0;
+      background: var(--green);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .ticker-track {
+      display: flex;
+      gap: 0;
+      animation: ticker 20s linear infinite;
+      width: max-content;
+    }
+
+    .ticker-item {
+      color: #000;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 0 28px;
+      white-space: nowrap;
+      letter-spacing: 0.5px;
+    }
+
+    .ticker-sep {
+      color: rgba(0,0,0,0.35);
+      font-size: 13px;
+      padding: 0 4px;
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ══════════════════════════════════════
+       FEATURES
+    ══════════════════════════════════════ */
     .features {
       padding: 90px 0;
     }
 
-    .section-title {
-      text-align: center;
-      margin-bottom: 60px;
+    .sec-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 14px;
     }
 
-    .section-title h3 {
-      font-size: 44px;
-      margin-bottom: 12px;
+    .sec-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(38px, 5vw, 60px);
+      letter-spacing: 2px;
+      line-height: 1;
+      margin-bottom: 16px;
     }
 
-    .section-title p {
-      color: #b8c5d6;
-      max-width: 700px;
-      margin: auto;
+    .sec-sub {
+      color: var(--text-sub);
+      font-size: 15px;
+      line-height: 1.7;
+      max-width: 520px;
     }
 
-    .feature-grid {
+    .feat-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 48px;
     }
 
-    .feature-card {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      padding: 32px;
-      border-radius: 24px;
-      transition: 0.3s ease;
-      backdrop-filter: blur(12px);
+    .feat-card {
+      background: var(--gray);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 28px;
+      transition: 0.3s;
+      position: relative;
+      overflow: hidden;
     }
 
-    .feature-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(32,201,51,0.4);
+    .feat-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 0% 0%, rgba(34,197,94,0.06) 0%, transparent 60%);
+      pointer-events: none;
     }
 
-    .feature-icon {
-      font-size: 42px;
+    .feat-card:hover {
+      border-color: rgba(34,197,94,0.25);
+      transform: translateY(-4px);
+    }
+
+    .feat-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--green-dim);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
       margin-bottom: 18px;
     }
 
-    .feature-card h4 {
-      font-size: 24px;
-      margin-bottom: 12px;
+    .feat-card h4 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 8px;
     }
 
-    .feature-card p {
-      color: #c5d0df;
-      line-height: 1.7;
+    .feat-card p {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.65;
     }
 
-    .sports {
-      padding: 40px 0 90px;
-    }
+    /* large card spans 2 cols */
+    .feat-card.wide { grid-column: span 2; }
 
-    .sports-grid {
+    .feat-card.wide .wide-inner {
       display: flex;
-      gap: 20px;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .wide-text { flex: 1; }
+
+    .slot-preview {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .slot-tile {
+      aspect-ratio: 1;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .sport-pill {
-      padding: 14px 24px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 11px;
       font-weight: 600;
+      gap: 3px;
     }
 
-    .cta {
-      padding: 90px 0;
+    .slot-tile.avail {
+      background: rgba(34,197,94,0.12);
+      border: 1px solid rgba(34,197,94,0.2);
+      color: var(--green);
+    }
+
+    .slot-tile.booked {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      color: #444;
+    }
+
+    .slot-tile.sel {
+      background: var(--green);
+      color: #000;
+    }
+
+    /* ══════════════════════════════════════
+       HOW IT WORKS
+    ══════════════════════════════════════ */
+    .how {
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-top: 52px;
+      position: relative;
+    }
+
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 26px;
+      left: 12%;
+      right: 12%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+      z-index: 0;
+    }
+
+    .step {
+      text-align: center;
+      padding: 0 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-num {
+      width: 52px;
+      height: 52px;
+      background: var(--gray);
+      border: 1px solid rgba(34,197,94,0.3);
+      border-radius: 50%;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      color: var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .step h5 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      font-size: 12px;
+      color: var(--text-sub);
+      line-height: 1.6;
+    }
+
+    /* ══════════════════════════════════════
+       SPORTS
+    ══════════════════════════════════════ */
+    .sports-sec {
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .sports-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 36px;
+    }
+
+    .s-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--gray);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 12px 22px;
+      font-weight: 600;
+      font-size: 14px;
+      transition: 0.25s;
+    }
+
+    .s-pill:hover {
+      border-color: rgba(34,197,94,0.35);
+      background: var(--green-dim);
+      color: var(--green);
+    }
+
+    .s-pill-emoji { font-size: 20px; }
+
+    /* ══════════════════════════════════════
+       CTA
+    ══════════════════════════════════════ */
+    .cta-sec {
+      padding: 80px 0 100px;
     }
 
     .cta-box {
-      background: linear-gradient(135deg, rgba(10,77,255,0.2), rgba(32,201,51,0.18));
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 34px;
-      padding: 70px 40px;
+      background: var(--gray);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 30px;
+      padding: 64px 40px;
       text-align: center;
-      backdrop-filter: blur(16px);
+      position: relative;
+      overflow: hidden;
     }
 
-    .cta-box h3 {
-      font-size: 52px;
-      margin-bottom: 20px;
+    .cta-box::before {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(34,197,94,0.12) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
     }
+
+    .cta-box .sec-title { margin-bottom: 16px; }
 
     .cta-box p {
-      color: #d2dbe8;
-      margin-bottom: 30px;
-      font-size: 18px;
+      color: var(--text-sub);
+      font-size: 16px;
+      margin-bottom: 32px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
+    /* ══════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════ */
     footer {
-      padding: 50px 0 30px;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      margin-top: 40px;
+      border-top: 1px solid var(--border);
+      padding: 48px 0 28px;
     }
 
     .footer-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 30px;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
     }
 
-    .footer-brand h4 {
+    .footer-brand-name {
+      font-family: 'Bebas Neue', sans-serif;
       font-size: 32px;
-      margin-bottom: 12px;
-      color: #20C933;
+      letter-spacing: 2px;
+      color: var(--green);
+      margin-bottom: 10px;
     }
 
-    .footer-brand p,
-    .footer-links a,
-    .footer-contact p {
-      color: #b9c7d9;
-      line-height: 1.8;
+    .footer-brand p {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.7;
+      max-width: 280px;
     }
 
-    .footer-links {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+    .footer-col h5 {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-sub);
+      margin-bottom: 16px;
     }
 
-    .footer-links a:hover {
-      color: #20C933;
-    }
-
-    .copyright {
-      margin-top: 40px;
-      text-align: center;
-      color: #8b9ab0;
+    .footer-col a {
+      display: block;
       font-size: 14px;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 10px;
+      transition: color 0.2s;
     }
 
-    @media(max-width: 900px) {
-      .hero-content {
+    .footer-col a:hover { color: var(--green); }
+
+    .footer-col p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 10px;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-bottom p {
+      font-size: 13px;
+      color: var(--text-sub);
+    }
+
+    .footer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--green-dim);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--green);
+    }
+
+    /* ══════════════════════════════════════
+       MOBILE NAV DRAWER
+    ══════════════════════════════════════ */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(8,12,10,0.97);
+      z-index: 200;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      font-size: 24px;
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 2px;
+      color: var(--white);
+    }
+
+    .mobile-menu a:hover { color: var(--green); }
+
+    .mobile-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      font-size: 28px;
+      cursor: pointer;
+      color: var(--text-sub);
+      background: none;
+      border: none;
+    }
+
+    /* ══════════════════════════════════════
+       RESPONSIVE — MOBILE FIRST
+    ══════════════════════════════════════ */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .hamburger { display: flex; }
+
+      .hero-inner {
         grid-template-columns: 1fr;
         text-align: center;
+        gap: 48px;
       }
 
-      .hero-text h2 {
-        font-size: 52px;
-      }
+      .hero-sub { margin: 0 auto 36px; }
+      .hero-actions { justify-content: center; }
 
-      .hero-buttons {
-        justify-content: center;
-      }
+      .phone-frame { width: 220px; }
 
-      .nav-links {
-        display: none;
-      }
+      .float-card-1 { right: 0px; }
+      .float-card-2 { left: 0px; }
 
-      .cta-box h3 {
-        font-size: 38px;
-      }
+      .stats-strip { margin-top: 36px; }
+      .stat-num { font-size: 26px; }
+
+      .feat-grid { grid-template-columns: 1fr; }
+      .feat-card.wide { grid-column: span 1; }
+      .feat-card.wide .wide-inner { flex-direction: column; gap: 24px; }
+      .slot-preview { grid-template-columns: repeat(4, 1fr); }
+
+      .steps { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+      .steps::before { display: none; }
+
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
     }
 
-    @media(max-width: 600px) {
-      .hero-text h2 {
-        font-size: 42px;
-      }
+    @media (max-width: 600px) {
+      .hero { padding: 60px 0 40px; }
+      .hero-title { font-size: 58px; }
 
-      .section-title h3 {
-        font-size: 34px;
-      }
+      .stats-strip { flex-wrap: wrap; border-radius: 14px; }
+      .stat-item { min-width: 50%; border-right: none; border-bottom: 1px solid var(--border); }
+      .stat-item:nth-child(odd) { border-right: 1px solid var(--border); }
+      .stat-item:last-child, .stat-item:nth-last-child(2):nth-child(odd) { border-bottom: none; }
 
-      .cta-box h3 {
-        font-size: 32px;
-      }
+      .feat-card { padding: 22px; }
+      .steps { grid-template-columns: 1fr; }
+      .cta-box { padding: 44px 24px; }
+
+      .btn-main, .btn-ghost { width: 100%; justify-content: center; }
+      .hero-actions { flex-direction: column; }
     }
   </style>
 </head>
 <body>
 
+  <!-- ── NAV ── -->
   <header>
-    <div class="container">
-      <nav>
-        <div class="logo">
-          <img src="newlogo.png" alt="Playon Logo">
-          <h1>Playon</h1>
-        </div>
+    <nav>
+      <div class="nav-inner">
+        <a href="/" class="logo">
+          <div class="logo-mark">P</div>
+          <span class="logo-text">PLAYON</span>
+        </a>
 
         <div class="nav-links">
           <a href="#home">Home</a>
           <a href="#features">Features</a>
           <a href="#sports">Sports</a>
-          <a href="/privacy-policy">Privacy Policy</a>
+          <a href="/privacy-policy">Privacy</a>
           <a href="/contact">Contact</a>
         </div>
-      </nav>
-    </div>
+
+        <a href="#" class="nav-cta">Download App</a>
+
+        <div class="hamburger" onclick="toggleMenu()">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </nav>
   </header>
 
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" onclick="toggleMenu()">✕</button>
+    <a href="#home" onclick="toggleMenu()">Home</a>
+    <a href="#features" onclick="toggleMenu()">Features</a>
+    <a href="#sports" onclick="toggleMenu()">Sports</a>
+    <a href="/privacy-policy" onclick="toggleMenu()">Privacy</a>
+    <a href="/contact" onclick="toggleMenu()">Contact</a>
+    <a href="#" class="btn-main" style="margin-top:8px;">Download App</a>
+  </div>
+
+  <!-- ── HERO ── -->
   <section class="hero" id="home">
-    <div class="container hero-content">
-      <div class="hero-text">
-        <h2>
-          Book Your <span>Game</span><br>
-          Instantly
-        </h2>
-
-        <p>
-          Discover nearby football and cricket turfs, check real-time slot availability,
-          and make secure bookings in seconds with Playon.
-        </p>
-
-        <div class="hero-buttons">
-          <a href="#" class="btn btn-primary">Download App</a>
-          <a href="/contact" class="btn btn-secondary">Contact Us</a>
-        </div>
-      </div>
-
-      <div class="hero-image">
-        <img src="newfeaturegraphic.png" alt="Playon App UI">
-      </div>
-    </div>
-  </section>
-
-  <section class="features" id="features">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
     <div class="container">
-      <div class="section-title">
-        <h3>Why Choose Playon?</h3>
-        <p>
-          Built for sports lovers, teams, and turf owners with a modern booking experience.
-        </p>
-      </div>
+      <div class="hero-inner">
 
-      <div class="feature-grid">
+        <!-- Left text -->
+        <div class="hero-text-side">
+          <div class="live-badge">
+            <div class="live-dot"></div>
+            Live slot availability
+          </div>
 
-        <div class="feature-card">
-          <div class="feature-icon">⚡</div>
-          <h4>Instant Booking</h4>
-          <p>
-            Book football and cricket turfs instantly without calls or waiting.
+          <h1 class="hero-title">
+            BOOK YOUR<br>
+            <span class="accent">GAME.</span><br>
+            INSTANTLY.
+          </h1>
+
+          <p class="hero-sub">
+            Discover nearby football, cricket & badminton turfs.
+            Check real-time slot availability and book in seconds — no calls, no waiting.
           </p>
-        </div>
 
-        <div class="feature-card">
-          <div class="feature-icon">📍</div>
-          <h4>Nearby Grounds</h4>
-          <p>
-            Discover sports grounds and turfs around your location.
-          </p>
-        </div>
+          <div class="hero-actions">
+            <a href="#" class="btn-main">
+              ↓ Download App
+            </a>
+            <a href="/contact" class="btn-ghost">
+              Contact Us →
+            </a>
+          </div>
 
-        <div class="feature-card">
-          <div class="feature-icon">⏰</div>
-          <h4>Live Slot Availability</h4>
-          <p>
-            Check available timings in real time before booking.
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">💳</div>
-          <h4>Secure Payments</h4>
-          <p>
-            Fast, safe, and hassle-free online payments directly inside the app.
-          </p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <section class="sports" id="sports">
-    <div class="container">
-      <div class="section-title">
-        <h3>Sports Supported</h3>
-        <p>
-          More sports and new features are coming soon.
-        </p>
-      </div>
-
-      <div class="sports-grid">
-        <div class="sport-pill">⚽ Football</div>
-        <div class="sport-pill">🏏 Cricket</div>
-        <div class="sport-pill">🏸 Badminton</div>
-        <div class="sport-pill">🏐 Volleyball</div>
-        <div class="sport-pill">🎾 More Soon</div>
-      </div>
-    </div>
-  </section>
-
-  <section class="cta">
-    <div class="container">
-      <div class="cta-box">
-        <h3>Play More. Book Faster.</h3>
-
-        <p>
-          Download Playon today and experience the easiest way to book sports turfs near you.
-        </p>
-
-        <a href="#" class="btn btn-primary">Get Started</a>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container">
-      <div class="footer-grid">
-
-        <div class="footer-brand">
-          <h4>Playon</h4>
-          <p>
-            The smart way to discover and book sports turfs near you.
-          </p>
-        </div>
-
-        <div>
-          <h4 style="margin-bottom:16px;">Quick Links</h4>
-          <div class="footer-links">
-            <a href="/">Home</a>  
-            <a href="/privacy-policy">Privacy Policy</a>
-            <a href="/delete-account">Delete Account</a>
-            <a href="/terms">Terms & Conditions</a>
+          <!-- Stats -->
+          <div class="stats-strip">
+            <div class="stat-item">
+              <div class="stat-num">10+</div>
+              <div class="stat-label">Turfs</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">500+</div>
+              <div class="stat-label">Players</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">99%</div>
+              <div class="stat-label">Uptime</div>
+            </div>
           </div>
         </div>
 
-        <div class="footer-contact">
-          <h4 style="margin-bottom:16px;">Contact</h4>
-          <p>📧 support@playon.fit</p>
-          <p>🌐 www.playon.fit</p>
+        <!-- Right phone mockup -->
+        <div class="hero-visual">
+          <div class="phone-wrap">
+            <!-- Floating card 1 -->
+            <div class="float-card float-card-1">
+              <div class="float-label">Today's bookings</div>
+              <div class="float-value">24 slots filled</div>
+            </div>
+
+            <!-- Phone -->
+            <div class="phone-frame">
+              <div class="phone-screen">
+                <div class="app-header-sim">
+                  <span class="app-logo">PLAYON</span>
+                  <div class="notif-dot">🔔</div>
+                </div>
+
+                <div class="search-bar-sim">
+                  🔍 Search turfs near you...
+                </div>
+
+                <div class="section-label">Near You</div>
+
+                <div class="turf-card-sim">
+                  <div class="turf-img-sim">⚽</div>
+                  <div class="turf-info-sim">
+                    <div>
+                      <div class="turf-name-sim">Big Hitters Arena</div>
+                      <div class="turf-loc-sim">📍 Ravi Nagar · 1.2 km</div>
+                    </div>
+                    <div class="turf-price-sim">₹500/hr</div>
+                  </div>
+                </div>
+
+                <div class="section-label">Today's Slots</div>
+
+                <div class="slots-row-sim">
+                  <div class="slot-sim taken">6 AM</div>
+                  <div class="slot-sim taken">7 AM</div>
+                  <div class="slot-sim">8 AM</div>
+                  <div class="slot-sim">9 AM</div>
+                  <div class="slot-sim taken">10 AM</div>
+                </div>
+
+                <div class="turf-card-sim">
+                  <div class="turf-img-sim">🏏</div>
+                  <div class="turf-info-sim">
+                    <div>
+                      <div class="turf-name-sim">Cricket Ground</div>
+                      <div class="turf-loc-sim">📍 MG Road · 2.4 km</div>
+                    </div>
+                    <div class="turf-price-sim">₹800/hr</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Floating card 2 -->
+            <div class="float-card float-card-2">
+              <div class="float-label">Payment</div>
+              <div class="float-value">✅ Confirmed</div>
+            </div>
+          </div>
         </div>
 
       </div>
+    </div>
+  </section>
 
-      <div class="copyright">
-        © 2026 Playon. All rights reserved.
+  <!-- ── TICKER ── -->
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <span class="ticker-item">⚽ Football</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">🏏 Cricket</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">🏸 Badminton</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">🏐 Volleyball</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">🎾 Tennis</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">⚡ Instant Booking</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">📍 Near You</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">💳 Secure Payments</span><span class="ticker-sep">·</span>
+      <!-- duplicate for seamless loop -->
+      <span class="ticker-item">⚽ Football</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">🏏 Cricket</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">🏸 Badminton</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">🏐 Volleyball</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">🎾 Tennis</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">⚡ Instant Booking</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">📍 Near You</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">💳 Secure Payments</span><span class="ticker-sep">·</span>
+    </div>
+  </div>
+
+  <!-- ── FEATURES ── -->
+  <section class="features" id="features">
+    <div class="container">
+      <span class="sec-tag">Why Playon</span>
+      <h2 class="sec-title">BUILT FOR<br>PLAYERS &amp; OWNERS</h2>
+      <p class="sec-sub">Everything you need to find, book, and manage sports turf bookings — all in one place.</p>
+
+      <div class="feat-grid">
+
+        <div class="feat-card">
+          <div class="feat-icon">⚡</div>
+          <h4>Instant Booking</h4>
+          <p>Book football and cricket turfs in seconds — no phone calls, no waiting. Confirm your slot and get on the field.</p>
+        </div>
+
+        <div class="feat-card">
+          <div class="feat-icon">📍</div>
+          <h4>Nearby Turfs</h4>
+          <p>Automatically sorted by GPS distance. See exactly how far each turf is and pick the closest one.</p>
+        </div>
+
+        <div class="feat-card wide">
+          <div class="wide-inner">
+            <div class="wide-text">
+              <div class="feat-icon">⏰</div>
+              <h4>Live Slot Availability</h4>
+              <p>See which slots are available, booked, or blocked in real time. No double bookings, ever. Slots update the moment someone books.</p>
+            </div>
+            <div class="slot-preview">
+              <div class="slot-tile avail"><span>6 AM</span><span>Free</span></div>
+              <div class="slot-tile booked"><span>7 AM</span><span>—</span></div>
+              <div class="slot-tile sel"><span>8 AM</span><span>✓</span></div>
+              <div class="slot-tile avail"><span>9 AM</span><span>Free</span></div>
+              <div class="slot-tile booked"><span>10 AM</span><span>—</span></div>
+              <div class="slot-tile avail"><span>11 AM</span><span>Free</span></div>
+              <div class="slot-tile avail"><span>12 PM</span><span>Free</span></div>
+              <div class="slot-tile booked"><span>1 PM</span><span>—</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="feat-card">
+          <div class="feat-icon">💳</div>
+          <h4>Secure Payments</h4>
+          <p>Pay advance or full amount online via Razorpay. Your money is safe — refunds processed automatically if cancelled.</p>
+        </div>
+
+        <div class="feat-card">
+          <div class="feat-icon">🏟️</div>
+          <h4>Turf Owner Dashboard</h4>
+          <p>Owners get a full dashboard — manage bookings, block slots, track revenue, and manage operators.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HOW IT WORKS ── -->
+  <section class="how">
+    <div class="container">
+      <span class="sec-tag">How It Works</span>
+      <h2 class="sec-title">4 STEPS TO<br>YOUR GAME</h2>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h5>Find a Turf</h5>
+          <p>Browse turfs near you, sorted by distance automatically.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h5>Pick a Slot</h5>
+          <p>Check live availability and pick your date and time.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h5>Pay Securely</h5>
+          <p>Pay advance or full amount via Razorpay in seconds.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <h5>Play!</h5>
+          <p>Show up and play. Your booking is confirmed instantly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SPORTS ── -->
+  <section class="sports-sec" id="sports">
+    <div class="container">
+      <span class="sec-tag">Sports</span>
+      <h2 class="sec-title">YOUR SPORT,<br>YOUR GROUND</h2>
+      <p class="sec-sub">More sports and venues added regularly.</p>
+
+      <div class="sports-pills">
+        <div class="s-pill"><span class="s-pill-emoji">⚽</span> Football</div>
+        <div class="s-pill"><span class="s-pill-emoji">🏏</span> Cricket</div>
+        <div class="s-pill"><span class="s-pill-emoji">🏸</span> Badminton</div>
+        <div class="s-pill"><span class="s-pill-emoji">🏐</span> Volleyball</div>
+        <div class="s-pill"><span class="s-pill-emoji">🎾</span> Tennis</div>
+        <div class="s-pill"><span class="s-pill-emoji">🤼</span> Kabaddi</div>
+        <div class="s-pill"><span class="s-pill-emoji">🏀</span> Basketball</div>
+        <div class="s-pill"><span class="s-pill-emoji">➕</span> More Soon</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ── -->
+  <section class="cta-sec">
+    <div class="container">
+      <div class="cta-box">
+        <span class="sec-tag">Get Started</span>
+        <h2 class="sec-title">PLAY MORE.<br>BOOK FASTER.</h2>
+        <p>Download Playon today and experience the easiest way to book sports turfs near you.</p>
+        <a href="#" class="btn-main" style="display:inline-flex;">↓ Download App</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-brand-name">PLAYON</div>
+          <p>The smart way to discover and book sports turfs near you. Built for players, teams, and turf owners.</p>
+        </div>
+
+        <div class="footer-col">
+          <h5>Links</h5>
+          <a href="/">Home</a>
+          <a href="/privacy-policy">Privacy Policy</a>
+          <a href="/delete-account">Delete Account</a>
+          <a href="/terms">Terms &amp; Conditions</a>
+        </div>
+
+        <div class="footer-col">
+          <h5>Contact</h5>
+          <p>📧 support@playon.fit</p>
+          <p>🌐 www.playon.fit</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Playon. All rights reserved.</p>
+        <div class="footer-badge">
+          <div class="live-dot"></div>
+          All systems operational
+        </div>
       </div>
     </div>
   </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+  </script>
 
 </body>
 </html>
