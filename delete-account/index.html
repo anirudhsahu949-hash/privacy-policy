@@ -4,295 +4,559 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Delete Account – Playon</title>
-
-  <meta
-    name="description"
-    content="Request deletion of your Playon account and associated data."
-  />
+  <meta name="description" content="Request deletion of your Playon account and associated data." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
+    :root {
+      --black:     #080C0A;
+      --white:     #F5F7F5;
+      --green:     #22C55E;
+      --green-dim: rgba(34,197,94,0.10);
+      --green-glow:rgba(34,197,94,0.30);
+      --gray:      #1A1F1C;
+      --gray2:     #252B27;
+      --text-sub:  #8A9690;
+      --border:    rgba(255,255,255,0.07);
+      --red-dim:   rgba(239,68,68,0.10);
+      --red-border:rgba(239,68,68,0.22);
+      --amber-dim: rgba(251,191,36,0.10);
+      --amber-border:rgba(251,191,36,0.22);
     }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
-      background: #041126;
-      color: white;
+      background: var(--black);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
       min-height: 100vh;
       overflow-x: hidden;
-      position: relative;
+      -webkit-font-smoothing: antialiased;
     }
 
+    /* Noise grain */
     body::before {
       content: '';
-      position: absolute;
-      width: 450px;
-      height: 450px;
-      background: rgba(10, 77, 255, 0.22);
-      border-radius: 50%;
-      filter: blur(120px);
-      top: -120px;
-      left: -120px;
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
     }
 
-    body::after {
-      content: '';
-      position: absolute;
-      width: 400px;
-      height: 400px;
-      background: rgba(32, 201, 51, 0.18);
+    /* Blobs */
+    .blob {
+      position: fixed;
       border-radius: 50%;
-      filter: blur(120px);
-      bottom: -100px;
-      right: -100px;
+      filter: blur(110px);
+      pointer-events: none;
+      z-index: 0;
     }
+    .blob-1 { width: 380px; height: 380px; background: rgba(34,197,94,0.10); top: -120px; left: -120px; }
+    .blob-2 { width: 300px; height: 300px; background: rgba(34,197,94,0.07); bottom: -80px; right: -80px; }
 
-    .container {
+    a { text-decoration: none; color: inherit; }
+
+    .wrap {
       width: 92%;
-      max-width: 900px;
+      max-width: 760px;
       margin: auto;
       position: relative;
       z-index: 2;
+      padding: 32px 0 80px;
     }
 
-    header {
-      padding: 28px 0;
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0 32px;
     }
 
     .logo {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 10px;
     }
 
-    .logo img {
-      width: 54px;
-      height: 54px;
-      border-radius: 14px;
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      background: var(--green);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      color: #000;
+      flex-shrink: 0;
     }
 
-    .logo h1 {
-      font-size: 30px;
-      font-weight: 800;
-      background: linear-gradient(90deg, #0A4DFF, #20C933);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .logo-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px;
+      letter-spacing: 2px;
     }
 
-    .main-card {
-      margin: 40px 0 70px;
-      padding: 50px;
-      border-radius: 32px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      backdrop-filter: blur(18px);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 10px 18px;
-      border-radius: 999px;
-      background: rgba(32,201,51,0.14);
-      color: #7dff8e;
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
       font-weight: 600;
-      margin-bottom: 24px;
-      border: 1px solid rgba(32,201,51,0.25);
+      color: var(--text-sub);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 999px;
+      transition: 0.2s;
     }
 
-    h2 {
-      font-size: 52px;
-      line-height: 1.1;
+    .nav-back:hover { color: var(--white); border-color: rgba(255,255,255,0.15); }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      margin-bottom: 36px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .page-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--red-dim);
+      border: 1px solid var(--red-border);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #f87171;
       margin-bottom: 20px;
     }
 
-    .subtitle {
-      color: #c5d0df;
-      font-size: 18px;
-      line-height: 1.8;
-      margin-bottom: 40px;
+    .page-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(44px, 8vw, 72px);
+      letter-spacing: 2px;
+      line-height: 0.95;
+      margin-bottom: 16px;
     }
 
+    .page-title .accent { color: var(--green); }
+
+    .page-sub {
+      font-size: 15px;
+      color: var(--text-sub);
+      line-height: 1.75;
+      max-width: 560px;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 32px 0;
+    }
+
+    /* ── SECTIONS ── */
     .section {
-      margin-bottom: 34px;
+      margin-bottom: 28px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .section:nth-child(2) { animation-delay: 0.05s; }
+    .section:nth-child(3) { animation-delay: 0.10s; }
+    .section:nth-child(4) { animation-delay: 0.15s; }
+    .section:nth-child(5) { animation-delay: 0.20s; }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .section-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--green-dim);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
     }
 
     .section h3 {
-      font-size: 26px;
-      margin-bottom: 16px;
-      color: #20C933;
-    }
-
-    .section p,
-    .section li {
-      color: #d5deeb;
-      line-height: 1.9;
       font-size: 16px;
-    }
-
-    ul {
-      padding-left: 20px;
-      margin-top: 10px;
-    }
-
-    .email-box {
-      margin-top: 18px;
-      background: rgba(10,77,255,0.12);
-      border: 1px solid rgba(10,77,255,0.35);
-      padding: 22px;
-      border-radius: 18px;
-    }
-
-    .email-box p {
-      margin-bottom: 8px;
-    }
-
-    .email {
-      color: #7dc3ff;
-      font-size: 20px;
       font-weight: 700;
+      color: var(--white);
     }
 
-    .footer {
-      margin-top: 50px;
-      padding-top: 30px;
-      border-top: 1px solid rgba(255,255,255,0.08);
+    .section p {
+      font-size: 14px;
+      color: var(--text-sub);
+      line-height: 1.8;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--gray);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      margin-top: 14px;
+    }
+
+    /* Email request card */
+    .email-card {
+      background: var(--gray);
+      border: 1px solid rgba(34,197,94,0.18);
+      border-radius: 20px;
+      padding: 24px 28px;
+      margin-top: 14px;
       display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .email-row {
+      display: flex;
+      align-items: center;
       justify-content: space-between;
-      gap: 20px;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
-    .footer a {
-      color: #b6c6da;
-      text-decoration: none;
+    .email-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-sub);
+      margin-bottom: 4px;
     }
 
-    .footer a:hover {
-      color: #20C933;
+    .email-value {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
     }
 
-    .warning {
-      margin-top: 24px;
-      padding: 18px;
-      border-radius: 18px;
-      background: rgba(255, 193, 7, 0.08);
-      border: 1px solid rgba(255, 193, 7, 0.18);
+    .email-value.green { color: var(--green); }
+
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--green-dim);
+      border: 1px solid rgba(34,197,94,0.22);
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.2s;
+      white-space: nowrap;
+      font-family: 'DM Sans', sans-serif;
     }
 
-    .warning p {
-      color: #ffe08a;
+    .copy-btn:hover { background: rgba(34,197,94,0.18); }
+
+    /* List items */
+    .item-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 14px;
     }
 
-    @media(max-width: 768px) {
-      .main-card {
-        padding: 32px 24px;
-      }
+    .item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: var(--gray);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
 
-      h2 {
-        font-size: 38px;
-      }
+    .item-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+
+    .item span {
+      font-size: 14px;
+      color: var(--text-sub);
+      line-height: 1.5;
+    }
+
+    /* Warning box */
+    .warning-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--amber-dim);
+      border: 1px solid var(--amber-border);
+      border-radius: 16px;
+      padding: 18px 20px;
+      margin-top: 14px;
+    }
+
+    .warning-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .warning-box p {
+      font-size: 13px;
+      color: #fde68a;
+      line-height: 1.65;
+      font-weight: 500;
+    }
+
+    /* Timeline */
+    .timeline {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-top: 16px;
+      background: var(--gray);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .tl-step {
+      flex: 1;
+      padding: 16px 12px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+      position: relative;
+    }
+
+    .tl-step:last-child { border-right: none; }
+
+    .tl-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      color: var(--green);
+      line-height: 1;
+    }
+
+    .tl-label {
+      font-size: 11px;
+      color: var(--text-sub);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    /* ── FOOTER NAV ── */
+    .foot-nav {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .foot-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-sub);
+      background: var(--gray);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 8px 16px;
+      transition: 0.2s;
+    }
+
+    .foot-link:hover {
+      color: var(--green);
+      border-color: rgba(34,197,94,0.25);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .page-title { font-size: 48px; }
+      .email-row { flex-direction: column; align-items: flex-start; }
+      .timeline { flex-direction: column; }
+      .tl-step { border-right: none; border-bottom: 1px solid var(--border); }
+      .tl-step:last-child { border-bottom: none; }
+      .copy-btn { width: 100%; justify-content: center; }
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
 
-    <header>
-      <div class="logo">
-        <img src="newlogo.png" alt="Playon Logo">
-        <h1>Playon</h1>
-      </div>
-    </header>
+  <div class="wrap">
 
-    <div class="main-card">
+    <!-- Nav -->
+    <nav>
+      <a href="/" class="logo">
+        <div class="logo-mark">P</div>
+        <span class="logo-text">PLAYON</span>
+      </a>
+      <a href="/" class="nav-back">← Back to Home</a>
+    </nav>
 
-      <div class="badge">Account & Data Deletion</div>
-
-      <h2>Delete Your Playon Account</h2>
-
-      <p class="subtitle">
-        Users can request deletion of their Playon account and associated personal data.
-        We are committed to protecting your privacy and ensuring secure data handling.
+    <!-- Page header -->
+    <div class="page-header">
+      <div class="page-tag">🗑️ Account Deletion</div>
+      <h1 class="page-title">DELETE YOUR<br><span class="accent">ACCOUNT.</span></h1>
+      <p class="page-sub">
+        You can request deletion of your Playon account and all associated personal data at any time.
+        We're committed to protecting your privacy.
       </p>
+    </div>
 
-      <div class="section">
-        <h3>How to Request Account Deletion</h3>
+    <div class="divider"></div>
 
-        <p>
-          To request deletion of your Playon account, please send an email using the details below.
-        </p>
+    <!-- Step 1 — How to request -->
+    <div class="section">
+      <div class="section-head">
+        <div class="section-icon">✉️</div>
+        <h3>How to Request Deletion</h3>
+      </div>
+      <p>Send us an email from your registered address using the details below. We'll handle the rest.</p>
 
-        <div class="email-box">
-          <p><strong>Email:</strong></p>
-          <p class="email">support@playon.fit</p>
-
-          <br>
-
-          <p><strong>Subject:</strong></p>
-          <p>Delete My Account</p>
+      <div class="email-card">
+        <div class="email-row">
+          <div>
+            <div class="email-label">Send email to</div>
+            <div class="email-value green">
+playonsport03@gmail.com
+</div>
+          </div>
+          <button class="copy-btn" onclick="copyEmail()">📋 Copy Email</button>
+        </div>
+        <div style="height: 1px; background: var(--border);"></div>
+        <div>
+          <div class="email-label">Subject line</div>
+          <div class="email-value">Delete My Account</div>
         </div>
       </div>
+    </div>
 
-      <div class="section">
+    <!-- Step 2 — What gets deleted -->
+    <div class="section">
+      <div class="section-head">
+        <div class="section-icon">🗂️</div>
         <h3>Data That Will Be Deleted</h3>
-
-        <ul>
-          <li>User profile information</li>
-          <li>Booking history</li>
-          <li>Saved account preferences</li>
-          <li>Personal account-related data</li>
-          <li>App activity linked to your account</li>
-        </ul>
       </div>
+      <p>The following data tied to your account will be permanently removed:</p>
 
-      <div class="section">
-        <h3>Data Retention Policy</h3>
-
-        <p>
-          Certain transaction records or legally required information may be retained temporarily for:
-        </p>
-
-        <ul>
-          <li>Fraud prevention</li>
-          <li>Security purposes</li>
-          <li>Legal compliance</li>
-          <li>Payment dispute resolution</li>
-        </ul>
+      <div class="item-list">
+        <div class="item"><div class="item-dot"></div><span>User profile and personal information</span></div>
+        <div class="item"><div class="item-dot"></div><span>Booking history and reservation records</span></div>
+        <div class="item"><div class="item-dot"></div><span>Saved account preferences and settings</span></div>
+        <div class="item"><div class="item-dot"></div><span>App activity linked to your account</span></div>
+        <div class="item"><div class="item-dot"></div><span>Push notification tokens and device data</span></div>
       </div>
+    </div>
 
-      <div class="section">
+    <!-- Step 3 — Retention policy -->
+    <div class="section">
+      <div class="section-head">
+        <div class="section-icon">🔒</div>
+        <h3>Data We May Retain</h3>
+      </div>
+      <p>Certain records may be kept temporarily for legal or security reasons:</p>
+
+      <div class="item-list">
+        <div class="item"><div class="item-dot"></div><span>Transaction records for fraud prevention</span></div>
+        <div class="item"><div class="item-dot"></div><span>Data required for legal compliance</span></div>
+        <div class="item"><div class="item-dot"></div><span>Payment dispute resolution records</span></div>
+      </div>
+    </div>
+
+    <!-- Step 4 — Processing time -->
+    <div class="section">
+      <div class="section-head">
+        <div class="section-icon">⏱️</div>
         <h3>Processing Time</h3>
+      </div>
+      <p>Here's what happens after you send your deletion request:</p>
 
-        <p>
-          Account deletion requests are usually processed within 7 business days.
-        </p>
-
-        <div class="warning">
-          <p>
-            Once your account is deleted, access to your bookings and account information cannot be restored.
-          </p>
+      <div class="timeline">
+        <div class="tl-step">
+          <div class="tl-num">Day 1</div>
+          <div class="tl-label">Request received</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-num">Day 2</div>
+          <div class="tl-label">Identity verified</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-num">Day 7</div>
+          <div class="tl-label">Data deleted</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-num">Done</div>
+          <div class="tl-label">Confirmation sent</div>
         </div>
       </div>
 
-      <div class="footer">
-        <a href="/">Home</a>
-        <a href="../privacy-policy">Privacy Policy</a>
-        <a href="/terms">Terms & Conditions</a>
-        <a href="/contact">Contact Us</a>
+      <div class="warning-box">
+        <div class="warning-icon">⚠️</div>
+        <p>
+          Once your account is deleted, all access to your bookings and account information is permanently lost and cannot be restored. This action is irreversible.
+        </p>
       </div>
+    </div>
 
+    <!-- Footer links -->
+    <div class="foot-nav">
+      <a href="/" class="foot-link">🏠 Home</a>
+      <a href="/privacy-policy" class="foot-link">🔒 Privacy Policy</a>
+      <a href="/terms" class="foot-link">📄 Terms & Conditions</a>
+      <a href="/contact" class="foot-link">💬 Contact Us</a>
     </div>
 
   </div>
+
+  <script>
+    function copyEmail() {
+      navigator.clipboard.writeText('support@playon.fit').then(() => {
+        const btn = document.querySelector('.copy-btn');
+        const orig = btn.innerHTML;
+        btn.innerHTML = '✅ Copied!';
+        btn.style.background = 'rgba(34,197,94,0.2)';
+        setTimeout(() => {
+          btn.innerHTML = orig;
+          btn.style.background = '';
+        }, 2000);
+      });
+    }
+  </script>
 
 </body>
 </html>

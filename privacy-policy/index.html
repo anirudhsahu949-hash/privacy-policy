@@ -2,130 +2,756 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Privacy Policy - playon</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy – Playon</title>
+  <meta name="description" content="Privacy Policy for Playon – Turf & Sports Booking app. Learn how we collect, use and protect your data." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --black:       #080C0A;
+      --white:       #F5F7F5;
+      --green:       #22C55E;
+      --green-dim:   rgba(34,197,94,0.10);
+      --green-border:rgba(34,197,94,0.20);
+      --gray:        #1A1F1C;
+      --gray2:       #252B27;
+      --text-sub:    #8A9690;
+      --border:      rgba(255,255,255,0.07);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: Arial, sans-serif;
-      line-height: 1.7;
-      margin: 0;
-      padding: 0;
-      background: #f9f9f9;
-      color: #333;
+      background: var(--black);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.75;
     }
-    .container {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 30px;
-      background: #fff;
+
+    /* Noise grain */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    .blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(110px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .blob-1 { width: 360px; height: 360px; background: rgba(34,197,94,0.09); top: -100px; left: -100px; }
+    .blob-2 { width: 280px; height: 280px; background: rgba(34,197,94,0.06); bottom: -80px; right: -80px; }
+
+    a { text-decoration: none; color: var(--green); }
+    a:hover { text-decoration: underline; }
+
+    /* ── LAYOUT ── */
+    .wrap {
+      width: 92%;
+      max-width: 800px;
+      margin: auto;
+      position: relative;
+      z-index: 2;
+      padding: 32px 0 100px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0 36px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-mark {
+      width: 36px; height: 36px;
+      background: var(--green);
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px; color: #000;
+      flex-shrink: 0;
     }
-    h1, h2 {
-      color: #111;
+
+    .logo-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px;
+      letter-spacing: 2px;
+      color: var(--white);
     }
-    h1 {
-      margin-bottom: 10px;
+
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-sub);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 999px;
+      transition: 0.2s;
+      text-decoration: none;
     }
-    p {
-      margin: 10px 0;
+    .nav-back:hover { color: var(--white); border-color: rgba(255,255,255,0.15); text-decoration: none; }
+
+    /* ── PAGE HEADER ── */
+    .page-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green-dim);
+      border: 1px solid var(--green-border);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--green);
+      margin-bottom: 20px;
     }
-    ul {
-      margin-left: 20px;
+
+    .page-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(48px, 8vw, 76px);
+      letter-spacing: 2px;
+      line-height: 0.95;
+      margin-bottom: 18px;
     }
-    footer {
-      margin-top: 40px;
+
+    .page-title .accent { color: var(--green); }
+
+    .effective-date {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gray);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-size: 13px;
+      color: var(--text-sub);
+      margin-bottom: 36px;
+    }
+
+    .effective-date strong { color: var(--white); }
+
+    /* ── TOC ── */
+    .toc {
+      background: var(--gray);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px 24px;
+      margin-bottom: 40px;
+    }
+
+    .toc-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-sub);
+      margin-bottom: 14px;
+    }
+
+    .toc-links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toc-links a {
       font-size: 14px;
-      color: #777;
-      text-align: center;
+      color: var(--text-sub);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s;
+    }
+
+    .toc-links a:hover { color: var(--green); text-decoration: none; }
+
+    .toc-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 14px;
+      color: var(--green);
+      width: 20px;
+      flex-shrink: 0;
+    }
+
+    /* ── SECTIONS ── */
+    .section {
+      margin-bottom: 36px;
+      scroll-margin-top: 24px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sec-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 13px;
+      color: var(--green);
+      background: var(--green-dim);
+      border: 1px solid var(--green-border);
+      width: 30px; height: 30px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .section h2 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .section p {
+      font-size: 14px;
+      color: var(--text-sub);
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+
+    .section p:last-child { margin-bottom: 0; }
+
+    /* Item list */
+    .item-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: var(--gray);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+    }
+
+    .item-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      margin-top: 8px;
+      flex-shrink: 0;
+    }
+
+    .item span {
+      font-size: 14px;
+      color: var(--text-sub);
+      line-height: 1.6;
+    }
+
+    .item strong { color: var(--white); }
+
+    /* Highlight box */
+    .highlight-box {
+      background: var(--green-dim);
+      border: 1px solid var(--green-border);
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-top: 12px;
+    }
+
+    .highlight-box p {
+      font-size: 13px;
+      color: rgba(34,197,94,0.85);
+      margin: 0;
+      font-weight: 500;
+    }
+
+    /* Contact box */
+    .contact-box {
+      background: var(--gray);
+      border: 1px solid var(--green-border);
+      border-radius: 18px;
+      padding: 22px 24px;
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .contact-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .contact-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-sub);
+      margin-bottom: 3px;
+    }
+
+    .contact-value {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--green-dim);
+      border: 1px solid var(--green-border);
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.2s;
+      white-space: nowrap;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .copy-btn:hover { background: rgba(34,197,94,0.18); }
+
+    /* ── FOOTER NAV ── */
+    .divider { height: 1px; background: var(--border); margin: 48px 0 28px; }
+
+    .foot-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .foot-copy {
+      font-size: 13px;
+      color: var(--text-sub);
+    }
+
+    .foot-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--green-dim);
+      border: 1px solid var(--green-border);
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--green);
+    }
+
+    .live-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity:1; transform:scale(1); }
+      50% { opacity:0.5; transform:scale(0.8); }
+    }
+
+    .foot-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .foot-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-sub);
+      background: var(--gray);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 8px 16px;
+      transition: 0.2s;
+      text-decoration: none;
+    }
+    .foot-link:hover { color: var(--green); border-color: var(--green-border); text-decoration: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .page-title { font-size: 48px; }
+      .contact-row { flex-direction: column; align-items: flex-start; }
+      .copy-btn { width: 100%; justify-content: center; }
+      .foot-meta { flex-direction: column; }
     }
   </style>
 </head>
-
 <body>
-  <div class="container">
-    
-    <h1>Privacy Policy</h1>
-    <p><strong>Effective Date:</strong> 30 April 2026</p>
 
-    <p>
-      Welcome to <strong>playon – Turf Booking</strong>. Your privacy is important to us.
-      This Privacy Policy explains how we collect, use, and protect your information when you use our application.
-    </p>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
 
-    <h2>1. Information We Collect</h2>
-    <p>We may collect the following information:</p>
-    <ul>
-      <li>name</li>
-        <li>phone number</li>
-      <li>your@gamil.com</li>
-      <li>Booking details (such as date, time, and turf selection)</li>
-      <li>Device information for app performance and analytics</li>
-    </ul>
+  <div class="wrap">
 
-    <h2>2. How We Use Your Information</h2>
-    <p>Your information is used to:</p>
-    <ul>
-      <li>Process turf bookings</li>
-      <li>Provide customer support</li>
-      <li>Improve app performance and user experience</li>
-      <li>Send booking confirmations and updates</li>
-    </ul>
+    <!-- Nav -->
+    <nav>
+      <a href="/" class="logo">
+        <div class="logo-mark">P</div>
+        <span class="logo-text">PLAYON</span>
+      </a>
+      <a href="/" class="nav-back">← Back to Home</a>
+    </nav>
 
-    <h2>3. Payments</h2>
-    <p>
-      All payments are securely processed through third-party payment gateways such as Razorpay.
-      We do not store your debit/credit card details or payment information on our servers.
-    </p>
+    <!-- Header -->
+    <div class="page-tag">🔒 Legal · Privacy</div>
+    <h1 class="page-title">PRIVACY<br><span class="accent">POLICY.</span></h1>
 
-    <h2>4. Data Sharing</h2>
-    <p>We do not sell your personal data. We may share your data only in the following cases:</p>
-    <ul>
-      <li>With payment providers for transaction processing</li>
-      <li>With legal authorities if required by law</li>
-    </ul>
+    <div class="effective-date">
+      📅 <span>Effective Date: <strong>30 April 2026</strong></span>
+      &nbsp;·&nbsp;
+      🔄 <span>Last Updated: <strong>25 May 2026</strong></span>
+    </div>
 
-    <h2>5. Data Security</h2>
-    <p>
-      We take reasonable security measures to protect your information from unauthorized access,
-      misuse, or disclosure.
-    </p>
+    <!-- TOC -->
+    <div class="toc">
+      <div class="toc-title">Contents</div>
+      <div class="toc-links">
+        <a href="#s1"><span class="toc-num">1</span> Information We Collect</a>
+        <a href="#s2"><span class="toc-num">2</span> name and contact</a>
+        <a href="#s3"><span class="toc-num">3</span> How We Use Your Information</a>
+        <a href="#s4"><span class="toc-num">4</span> Payments</a>
+        <a href="#s5"><span class="toc-num">5</span> Data Sharing</a>
+        <a href="#s6"><span class="toc-num">6</span> Data Security</a>
+        <a href="#s7"><span class="toc-num">7</span> Data Retention</a>
+        <a href="#s8"><span class="toc-num">8</span> Your Rights</a>
+        <a href="#s9"><span class="toc-num">9</span> Third-Party Services</a>
+        <a href="#s10"><span class="toc-num">10</span> Children's Privacy</a>
+        <a href="#s11"><span class="toc-num">11</span> Changes to This Policy</a>
+        <a href="#s12"><span class="toc-num">12</span> Contact Us</a>
+      </div>
+    </div>
 
-    <h2>6. User Rights</h2>
-    <p>You have the right to:</p>
-    <ul>
-      <li>Request access to your data</li>
-      <li>Request correction or deletion of your data</li>
-      <li>Contact us regarding privacy concerns</li>
-    </ul>
+    <!-- Intro -->
+    <div class="section">
+      <p>
+        Welcome to <strong style="color:var(--white)">Playon – Turf &amp; Sports Booking</strong>. We are committed to protecting your personal information and your right to privacy. This Privacy Policy explains what information we collect, why we collect it, and how we use it when you use our mobile application and related services.
+      </p>
+      <p>
+        By using Playon, you agree to the collection and use of information in accordance with this policy.
+      </p>
+    </div>
 
-    <h2>7. Third-Party Services</h2>
-    <p>
-      Our app may use third-party services (such as payment gateways) that have their own privacy policies.
-      We are not responsible for their practices.
-    </p>
+    <!-- 1. Information We Collect -->
+    <div class="section" id="s1">
+      <div class="section-head">
+        <div class="sec-num">1</div>
+        <h2>Information We Collect</h2>
+      </div>
+      <p>When you use Playon, we collect the following categories of personal information:</p>
 
-    <h2>8. Children's Privacy</h2>
-    <p>
-      Our services are not intended for users under the age of 18.
-    </p>
+      <div class="item-list">
+        <div class="item"><div class="item-dot"></div><span><strong>Full name</strong> — used to identify your account and personalise your experience.</span></div>
+        <div class="item"><div class="item-dot"></div><span><strong>Email address</strong> — used for account registration, login, and booking confirmations.</span></div>
+        <div class="item"><div class="item-dot"></div><span><strong>Phone number</strong> — used for account verification and booking-related communication.</span></div>
+        <div class="item"><div class="item-dot"></div><span><strong>Location data</strong> — used to show nearby turfs and sort venues by distance. See Section 2 for full details.</span></div>
+        <div class="item"><div class="item-dot"></div><span><strong>Booking details</strong> — including selected turf, date, time slot, and payment status.</span></div>
+        <div class="item"><div class="item-dot"></div><span><strong>Device information</strong> — including device model, operating system version, and unique device identifiers for app performance and push notifications.</span></div>
+        <div class="item"><div class="item-dot"></div><span><strong>Push notification token</strong> — used to send booking confirmations, reminders, and app updates.</span></div>
+      </div>
+    </div>
 
-    <h2>9. Changes to This Privacy Policy</h2>
-    <p>
-      We may update this Privacy Policy from time to time. Any changes will be posted on this page.
-    </p>
+    <!-- 2. Location Data -->
+    <div class="section" id="s2">
+      <div class="section-head">
+        <div class="sec-num">2</div>
+        <h2>Location Data</h2>
+      </div>
+      <p>
+        Playon requests access to your device's location to provide core features of the app. This is one of the most important data types we collect, and we want to be fully transparent about how it is used.
+      </p>
 
-    <h2>10. Contact Us</h2>
-    <p>
-      If you have any questions about this Privacy Policy, you can contact us at:
-    </p>
-    <p><strong>Email:</strong> anirudhshau949@gmail.com</p>
+      <div class="item-list">
+        <div class="item"><div class="item-dot"></div><span><strong>What we collect:</strong> Approximate and/or precise geographic location (latitude and longitude) from your device's GPS or network.</span></div>
+        <div class="item"><div class="item-dot"></div><span><strong>When we collect it:</strong> Only when the app is open and in use (foreground access). We do not track your location in the background.</span></div>
+        <div class="item"><div class="item-dot"></div><span><strong>Why we collect it:</strong> To show turfs nearest to you, sort venues by distance, and display accurate travel distances on turf listings.</span></div>
+        <div class="item"><div class="item-dot"></div><span><strong>How it is stored:</strong> Your last known location (latitude, longitude, city, and area) is saved to your user profile in our secure database to provide consistent distance-based sorting across sessions.</span></div>
+        <div class="item"><div class="item-dot"></div><span><strong>Who can see it:</strong> Your location data is not shared with turf owners, operators, or any third parties except as described in Section 5.</span></div>
+        <div class="item"><div class="item-dot"></div><span><strong>Your control:</strong> You can revoke location permission at any time in your device settings. The app will continue to work but distance-based features will be unavailable.</span></div>
+      </div>
 
-    <footer>
-      © 2026 playon – Turf Booking. All rights reserved.
-    </footer>
+      <div class="highlight-box">
+        <p>✅ Playon does not track your location in the background, sell your location data, or share it with advertisers.</p>
+      </div>
+    </div>
+
+    <!-- 3. How We Use Your Information -->
+    <div class="section" id="s3">
+      <div class="section-head">
+        <div class="sec-num">3</div>
+        <h2>How We Use Your Information</h2>
+      </div>
+      <p>We use the information we collect for the following purposes:</p>
+
+      <div class="item-list">
+        <div class="item"><div class="item-dot"></div><span>To create and manage your Playon account</span></div>
+        <div class="item"><div class="item-dot"></div><span>To process and confirm turf bookings</span></div>
+        <div class="item"><div class="item-dot"></div><span>To show turfs near your location and sort by distance</span></div>
+        <div class="item"><div class="item-dot"></div><span>To send booking confirmations, payment receipts, and slot reminders via push notifications and email</span></div>
+        <div class="item"><div class="item-dot"></div><span>To provide customer support and resolve disputes</span></div>
+        <div class="item"><div class="item-dot"></div><span>To improve app performance, fix bugs, and enhance user experience</span></div>
+        <div class="item"><div class="item-dot"></div><span>To prevent fraud, abuse, and unauthorised access</span></div>
+        <div class="item"><div class="item-dot"></div><span>To comply with applicable laws and regulations</span></div>
+      </div>
+    </div>
+
+    <!-- 4. Payments -->
+    <div class="section" id="s4">
+      <div class="section-head">
+        <div class="sec-num">4</div>
+        <h2>Payments</h2>
+      </div>
+      <p>
+        All payments in Playon are securely processed through <strong style="color:var(--white)">Razorpay</strong>, a PCI-DSS compliant third-party payment gateway.
+      </p>
+      <p>
+        Playon does <strong style="color:var(--white)">not</strong> store, process, or have access to your credit card, debit card, UPI, or net banking details. All financial transactions are handled directly by Razorpay on their secure servers.
+      </p>
+      <p>
+        We store only transaction metadata — such as order ID, payment ID, payment status, and amounts — which are necessary for booking confirmation and dispute resolution.
+      </p>
+
+      <div class="highlight-box">
+        <p>💳 Your card and banking details are never stored on Playon's servers.</p>
+      </div>
+    </div>
+
+    <!-- 5. Data Sharing -->
+    <div class="section" id="s5">
+      <div class="section-head">
+        <div class="sec-num">5</div>
+        <h2>Data Sharing</h2>
+      </div>
+      <p>
+        We do not sell, rent, or trade your personal data to any third parties. We may share limited information only in the following circumstances:
+      </p>
+
+      <div class="item-list">
+        <div class="item"><div class="item-dot"></div><span><strong>Payment processing:</strong> Your name, email, and booking amount are shared with Razorpay solely to process payments.</span></div>
+        <div class="item"><div class="item-dot"></div><span><strong>Turf owners and operators:</strong> Your name, phone number, and booking details are shared with the relevant turf owner to facilitate your booking. Location data is not shared with owners.</span></div>
+        <div class="item"><div class="item-dot"></div><span><strong>Push notifications:</strong> Your device push token is used with Expo's notification service to deliver booking updates.</span></div>
+        <div class="item"><div class="item-dot"></div><span><strong>Legal compliance:</strong> We may disclose your information to law enforcement or government authorities if required by applicable law or valid legal process.</span></div>
+        <div class="item"><div class="item-dot"></div><span><strong>Business transfer:</strong> In the event of a merger, acquisition, or sale of assets, user data may be transferred as part of that transaction. We will notify you via email or a prominent notice in the app.</span></div>
+      </div>
+    </div>
+
+    <!-- 6. Data Security -->
+    <div class="section" id="s6">
+      <div class="section-head">
+        <div class="sec-num">6</div>
+        <h2>Data Security</h2>
+      </div>
+      <p>
+        We implement industry-standard security measures to protect your information, including:
+      </p>
+
+      <div class="item-list">
+        <div class="item"><div class="item-dot"></div><span>Data stored in Google Firebase with role-based access controls and Firestore security rules</span></div>
+        <div class="item"><div class="item-dot"></div><span>All data transmitted over HTTPS with TLS encryption</span></div>
+        <div class="item"><div class="item-dot"></div><span>Authentication handled by Firebase Authentication with secure token management</span></div>
+        <div class="item"><div class="item-dot"></div><span>Payment data managed exclusively by Razorpay's PCI-DSS compliant infrastructure</span></div>
+        <div class="item"><div class="item-dot"></div><span>Regular security reviews and access auditing</span></div>
+      </div>
+
+      <p style="margin-top:14px;">
+        While we take every reasonable precaution, no method of electronic transmission or storage is 100% secure. We cannot guarantee absolute security of your data.
+      </p>
+    </div>
+
+    <!-- 7. Data Retention -->
+    <div class="section" id="s7">
+      <div class="section-head">
+        <div class="sec-num">7</div>
+        <h2>Data Retention</h2>
+      </div>
+      <p>
+        We retain your personal information for as long as your account is active or as needed to provide our services. Specifically:
+      </p>
+
+      <div class="item-list">
+        <div class="item"><div class="item-dot"></div><span><strong>Account data</strong> — retained until you request account deletion.</span></div>
+        <div class="item"><div class="item-dot"></div><span><strong>Booking records</strong> — retained for up to 3 years after the booking date for dispute resolution and legal compliance.</span></div>
+        <div class="item"><div class="item-dot"></div><span><strong>Payment transaction metadata</strong> — retained for up to 5 years as required by financial regulations.</span></div>
+        <div class="item"><div class="item-dot"></div><span><strong>Location data</strong> — retained as part of your user profile and deleted upon account deletion.</span></div>
+      </div>
+
+      <p style="margin-top:14px;">
+        To request deletion of your account and data, visit our <a href="/delete-account">Delete Account page</a> or email us at <a href="mailto:playonsport03@gmail.com">playonsport03@gmail.com</a>.
+      </p>
+    </div>
+
+    <!-- 8. Your Rights -->
+    <div class="section" id="s8">
+      <div class="section-head">
+        <div class="sec-num">8</div>
+        <h2>Your Rights</h2>
+      </div>
+      <p>You have the following rights regarding your personal data:</p>
+
+      <div class="item-list">
+        <div class="item"><div class="item-dot"></div><span><strong>Access:</strong> Request a copy of the personal data we hold about you.</span></div>
+        <div class="item"><div class="item-dot"></div><span><strong>Correction:</strong> Request correction of inaccurate or incomplete data via the app's profile settings.</span></div>
+        <div class="item"><div class="item-dot"></div><span><strong>Deletion:</strong> Request deletion of your account and associated personal data. See our <a href="/delete-account">Delete Account page</a>.</span></div>
+        <div class="item"><div class="item-dot"></div><span><strong>Withdraw consent:</strong> Revoke location permissions or push notification permissions at any time in your device settings.</span></div>
+        <div class="item"><div class="item-dot"></div><span><strong>Data portability:</strong> Request an export of your personal data in a machine-readable format.</span></div>
+        <div class="item"><div class="item-dot"></div><span><strong>Objection:</strong> Object to certain processing of your data by contacting us directly.</span></div>
+      </div>
+
+      <p style="margin-top:14px;">To exercise any of these rights, contact us at <a href="mailto:playonsport03@gmail.com">playonsport03@gmail.com</a>. We will respond within 30 days.</p>
+    </div>
+
+    <!-- 9. Third-Party Services -->
+    <div class="section" id="s9">
+      <div class="section-head">
+        <div class="sec-num">9</div>
+        <h2>Third-Party Services</h2>
+      </div>
+      <p>Playon uses the following third-party services, each governed by their own privacy policies:</p>
+
+      <div class="item-list">
+        <div class="item"><div class="item-dot"></div><span><strong>Google Firebase</strong> — authentication, database, and cloud storage. <a href="https://firebase.google.com/support/privacy" target="_blank">Firebase Privacy Policy ↗</a></span></div>
+        <div class="item"><div class="item-dot"></div><span><strong>Razorpay</strong> — payment processing. <a href="https://razorpay.com/privacy/" target="_blank">Razorpay Privacy Policy ↗</a></span></div>
+        <div class="item"><div class="item-dot"></div><span><strong>Expo (Push Notifications)</strong> — delivery of push notifications to your device. <a href="https://expo.dev/privacy" target="_blank">Expo Privacy Policy ↗</a></span></div>
+        <div class="item"><div class="item-dot"></div><span><strong>Google Maps / Location APIs</strong> — reverse geocoding to convert GPS coordinates into readable location names.</span></div>
+      </div>
+
+      <p style="margin-top:14px;">We are not responsible for the privacy practices of these third-party services. We encourage you to review their respective privacy policies.</p>
+    </div>
+
+    <!-- 10. Children's Privacy -->
+    <div class="section" id="s10">
+      <div class="section-head">
+        <div class="sec-num">10</div>
+        <h2>Children's Privacy</h2>
+      </div>
+      <p>
+        Playon is not intended for use by individuals under the age of <strong style="color:var(--white)">18 years</strong>. We do not knowingly collect personal information from children under 18.
+      </p>
+      <p>
+        If you are a parent or guardian and believe your child has provided personal information to us without your consent, please contact us immediately at <a href="mailto:playonsport03@gmail.com">playonsport03@gmail.com</a>. We will take steps to delete such information promptly.
+      </p>
+    </div>
+
+    <!-- 11. Changes -->
+    <div class="section" id="s11">
+      <div class="section-head">
+        <div class="sec-num">11</div>
+        <h2>Changes to This Privacy Policy</h2>
+      </div>
+      <p>
+        We may update this Privacy Policy from time to time to reflect changes in our practices, technology, legal requirements, or other factors. When we make material changes, we will:
+      </p>
+
+      <div class="item-list">
+        <div class="item"><div class="item-dot"></div><span>Update the "Last Updated" date at the top of this page</span></div>
+        <div class="item"><div class="item-dot"></div><span>Notify you via push notification or email for significant changes</span></div>
+        <div class="item"><div class="item-dot"></div><span>Display a notice within the app where appropriate</span></div>
+      </div>
+
+      <p style="margin-top:14px;">Your continued use of Playon after any changes constitutes your acceptance of the updated Privacy Policy.</p>
+    </div>
+
+    <!-- 12. Contact -->
+    <div class="section" id="s12">
+      <div class="section-head">
+        <div class="sec-num">12</div>
+        <h2>Contact Us</h2>
+      </div>
+      <p>If you have any questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us:</p>
+
+      <div class="contact-box">
+        <div class="contact-row">
+          <div>
+            <div class="contact-label">Email</div>
+            <div class="contact-value">playonsport03@gmail.com</div>
+          </div>
+          <button class="copy-btn" onclick="copyEmail()">📋 Copy Email</button>
+        </div>
+        <div style="height:1px; background:var(--border);"></div>
+        <div>
+          <div class="contact-label">Website</div>
+          <div class="contact-value" style="color:var(--white);">www.playon.fit</div>
+        </div>
+        <div style="height:1px; background:var(--border);"></div>
+        <div>
+          <div class="contact-label">Response time</div>
+          <div style="font-size:14px; color:var(--text-sub);">We aim to respond to all privacy-related requests within <strong style="color:var(--white)">30 days</strong>.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="divider"></div>
+
+    <div class="foot-meta">
+      <p class="foot-copy">© 2026 Playon – Turf &amp; Sports Booking. All rights reserved.</p>
+      <div class="foot-badge">
+        <div class="live-dot"></div>
+        Policy up to date
+      </div>
+    </div>
+
+    <div class="foot-links">
+      <a href="/" class="foot-link">🏠 Home</a>
+      <a href="/delete-account" class="foot-link">🗑️ Delete Account</a>
+      <a href="/terms" class="foot-link">📄 Terms &amp; Conditions</a>
+      <a href="/contact" class="foot-link">💬 Contact Us</a>
+    </div>
 
   </div>
+
+  <script>
+    function copyEmail() {
+      navigator.clipboard.writeText('playonsport03@gmail.com').then(() => {
+        const btn = document.querySelector('.copy-btn');
+        const orig = btn.innerHTML;
+        btn.innerHTML = '✅ Copied!';
+        setTimeout(() => { btn.innerHTML = orig; }, 2000);
+      });
+    }
+  </script>
+
 </body>
 </html>

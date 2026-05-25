@@ -1,1064 +1,1068 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Playon — Turf Owner Guide</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Playon — Turf Owner Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  :root {
-    --brand: #0B1220;
-    --accent: #0EA5A4;
-    --accent2: #22C55E;
-    --light-bg: #F8FAFC;
-    --border: #E2E8F0;
-    --text: #0F172A;
-    --muted: #64748B;
-    --card: #ffffff;
-  }
+  <style>
+    :root {
+      --black:  #0A0D0B;
+      --white:  #FFFFFF;
+      --off:    #F7FAF8;
+      --green:  #22C55E;
+      --gd:     rgba(34,197,94,0.10);
+      --gb:     rgba(34,197,94,0.22);
+      --gray:   #F2F5F3;
+      --gray2:  #E6EBE8;
+      --muted:  #6B7A72;
+      --border: #E2E8E4;
+      --red:    #EF4444;
+      --amber:  #F59E0B;
+      --blue:   #3B82F6;
+    }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Inter', sans-serif; background: #F0F4F8; color: var(--text); }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
 
-  /* ── Cover ── */
-  .cover {
-    background: linear-gradient(135deg, #0B1220 0%, #0F2027 40%, #0EA5A4 100%);
-    color: white;
-    padding: 80px 60px 60px;
-    position: relative;
-    overflow: hidden;
-  }
-  .cover::before {
-    content: '';
-    position: absolute;
-    top: -100px; right: -100px;
-    width: 400px; height: 400px;
-    border-radius: 50%;
-    background: rgba(14,165,164,0.15);
-  }
-  .cover::after {
-    content: '';
-    position: absolute;
-    bottom: -80px; left: 200px;
-    width: 300px; height: 300px;
-    border-radius: 50%;
-    background: rgba(14,165,164,0.08);
-  }
-  .cover-tag { font-size: 13px; font-weight: 600; letter-spacing: .12em; color: #0EA5A4; text-transform: uppercase; margin-bottom: 16px; }
-  .cover-title { font-size: 56px; font-weight: 900; line-height: 1.1; margin-bottom: 16px; }
-  .cover-title span { color: #0EA5A4; }
-  .cover-sub { font-size: 18px; color: rgba(255,255,255,0.7); max-width: 520px; line-height: 1.6; margin-bottom: 40px; }
-  .cover-meta { display: flex; gap: 32px; }
-  .cover-meta-item { }
-  .cover-meta-label { font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: .08em; }
-  .cover-meta-val { font-size: 15px; font-weight: 600; color: white; margin-top: 2px; }
+    body {
+      background: var(--white);
+      color: var(--black);
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
 
-  /* ── TOC ── */
-  .toc {
-    background: white;
-    padding: 48px 60px;
-    border-bottom: 1px solid var(--border);
-  }
-  .toc h2 { font-size: 13px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 24px; }
-  .toc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 48px; }
-  .toc-item { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px dashed #E2E8F0; }
-  .toc-num { font-size: 12px; font-weight: 700; color: var(--accent); min-width: 24px; }
-  .toc-label { font-size: 14px; color: var(--text); font-weight: 500; }
+    a { color: var(--green); text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
-  /* ── Section ── */
-  .section { padding: 56px 60px; }
-  .section:nth-child(even) { background: white; }
-  .section-tag { font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .12em; margin-bottom: 8px; }
-  .section-title { font-size: 32px; font-weight: 800; color: var(--brand); margin-bottom: 8px; line-height: 1.2; }
-  .section-sub { font-size: 15px; color: var(--muted); line-height: 1.6; max-width: 680px; margin-bottom: 40px; }
+    /* ══ COVER ══ */
+    .cover {
+      background: var(--black);
+      color: var(--white);
+      padding: 64px 40px 52px;
+      position: relative;
+      overflow: hidden;
+    }
 
-  /* ── Role cards ── */
-  .role-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 40px; }
-  .role-card {
-    border-radius: 16px;
-    padding: 28px;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid;
-  }
-  .role-card.user    { background: #EFF6FF; border-color: #BFDBFE; }
-  .role-card.owner   { background: #F0FDF4; border-color: #BBF7D0; }
-  .role-card.op      { background: #FFF7ED; border-color: #FED7AA; }
-  .role-card.admin   { background: #FDF4FF; border-color: #E9D5FF; }
-  .role-icon { font-size: 32px; margin-bottom: 12px; }
-  .role-name { font-size: 16px; font-weight: 800; color: var(--brand); margin-bottom: 6px; }
-  .role-desc { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 16px; }
-  .role-features { list-style: none; }
-  .role-features li { font-size: 12px; color: #374151; padding: 3px 0; display: flex; align-items: flex-start; gap: 6px; }
-  .role-features li::before { content: '✓'; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .cover-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      pointer-events: none;
+    }
+    .cover-blob-1 { width: 350px; height: 350px; background: rgba(34,197,94,0.18); top: -120px; right: -80px; }
+    .cover-blob-2 { width: 250px; height: 250px; background: rgba(34,197,94,0.10); bottom: -60px; left: 100px; }
 
-  /* ── Flow diagram ── */
-  .flow { display: flex; align-items: center; gap: 0; margin: 32px 0; flex-wrap: wrap; }
-  .flow-step {
-    background: white;
-    border: 1.5px solid var(--border);
-    border-radius: 12px;
-    padding: 16px 20px;
-    text-align: center;
-    min-width: 130px;
-    flex: 1;
-  }
-  .flow-step.highlight { background: var(--brand); border-color: var(--brand); }
-  .flow-step.highlight .flow-label { color: white; }
-  .flow-step.highlight .flow-sub { color: rgba(255,255,255,0.6); }
-  .flow-step.accent { background: var(--accent); border-color: var(--accent); }
-  .flow-step.accent .flow-label { color: white; }
-  .flow-step.accent .flow-sub { color: rgba(255,255,255,0.7); }
-  .flow-step.green { background: #16A34A; border-color: #16A34A; }
-  .flow-step.green .flow-label { color: white; }
-  .flow-step.green .flow-sub { color: rgba(255,255,255,0.7); }
-  .flow-icon { font-size: 22px; margin-bottom: 6px; }
-  .flow-label { font-size: 12px; font-weight: 700; color: var(--brand); }
-  .flow-sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
-  .flow-arrow { font-size: 18px; color: #CBD5E1; padding: 0 6px; flex-shrink: 0; }
+    .cover-inner { position: relative; z-index: 2; max-width: 760px; margin: auto; }
 
-  /* ── Feature list ── */
-  .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 24px 0; }
-  .feature-card {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px;
-  }
-  .feature-icon { font-size: 24px; margin-bottom: 10px; }
-  .feature-title { font-size: 14px; font-weight: 700; color: var(--brand); margin-bottom: 4px; }
-  .feature-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+    .cover-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 36px;
+    }
 
-  /* ── Screen mockup ── */
-  .mockup-row { display: flex; gap: 24px; margin: 32px 0; flex-wrap: wrap; }
-  .mockup {
-    flex: 1;
-    min-width: 200px;
-    border-radius: 20px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-  }
-  .mockup-header {
-    padding: 16px 20px;
-    font-size: 13px;
-    font-weight: 700;
-    color: white;
-  }
-  .mockup-body { background: white; padding: 16px 20px; }
-  .mockup-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 0;
-    border-bottom: 1px solid #F1F5F9;
-  }
-  .mockup-item:last-child { border-bottom: none; }
-  .mockup-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-  .mockup-text { font-size: 12px; color: var(--text); flex: 1; }
-  .mockup-badge { font-size: 10px; padding: 3px 8px; border-radius: 20px; font-weight: 600; }
+    .logo-mark {
+      width: 38px; height: 38px;
+      background: var(--green);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      color: #000;
+    }
 
-  /* ── Payment box ── */
-  .payment-flow {
-    background: var(--brand);
-    border-radius: 16px;
-    padding: 32px;
-    color: white;
-    margin: 24px 0;
-  }
-  .payment-title { font-size: 18px; font-weight: 800; margin-bottom: 24px; }
-  .payment-steps { display: flex; gap: 0; }
-  .payment-step { flex: 1; text-align: center; position: relative; }
-  .payment-step::after {
-    content: '→';
-    position: absolute;
-    right: -10px; top: 20px;
-    color: rgba(255,255,255,0.3);
-    font-size: 16px;
-  }
-  .payment-step:last-child::after { display: none; }
-  .payment-num { width: 40px; height: 40px; border-radius: 50%; background: rgba(14,165,164,0.3); border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; color: var(--accent); margin: 0 auto 8px; }
-  .payment-step-label { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.9); }
-  .payment-step-sub { font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+    .logo-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px;
+      letter-spacing: 2px;
+      color: var(--white);
+    }
 
-  /* ── Table ── */
-  table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-  th { background: var(--brand); color: white; padding: 12px 16px; font-size: 12px; font-weight: 600; text-align: left; }
-  td { padding: 11px 16px; font-size: 13px; border-bottom: 1px solid #F1F5F9; }
-  tr:hover td { background: #F8FAFC; }
+    .cover-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gd);
+      border: 1px solid var(--gb);
+      border-radius: 999px;
+      padding: 5px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--green);
+      margin-bottom: 20px;
+    }
 
-  /* ── Info box ── */
-  .info-box {
-    border-radius: 12px;
-    padding: 20px 24px;
-    margin: 20px 0;
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-  }
-  .info-box.blue { background: #EFF6FF; border: 1px solid #BFDBFE; }
-  .info-box.green { background: #F0FDF4; border: 1px solid #BBF7D0; }
-  .info-box.amber { background: #FFFBEB; border: 1px solid #FDE68A; }
-  .info-box-icon { font-size: 20px; flex-shrink: 0; }
-  .info-box-title { font-size: 13px; font-weight: 700; color: var(--brand); margin-bottom: 4px; }
-  .info-box-text { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .cover-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(52px, 8vw, 84px);
+      letter-spacing: 2px;
+      line-height: 0.95;
+      margin-bottom: 18px;
+    }
 
-  /* ── Steps ── */
-  .steps { display: flex; flex-direction: column; gap: 16px; margin: 24px 0; }
-  .step { display: flex; gap: 16px; align-items: flex-start; }
-  .step-num { width: 32px; height: 32px; border-radius: 50%; background: var(--brand); color: white; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; flex-shrink: 0; }
-  .step-body { flex: 1; padding-top: 4px; }
-  .step-title { font-size: 14px; font-weight: 700; color: var(--brand); margin-bottom: 3px; }
-  .step-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+    .cover-title .g { color: var(--green); }
 
-  /* ── Price example ── */
-  .price-example {
-    background: #F0FDF4;
-    border: 1px solid #BBF7D0;
-    border-radius: 12px;
-    padding: 24px;
-    margin: 20px 0;
-  }
-  .price-title { font-size: 14px; font-weight: 700; color: #15803D; margin-bottom: 16px; }
-  .price-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #D1FAE5; font-size: 13px; }
-  .price-row:last-child { border-bottom: none; font-weight: 700; color: #15803D; }
-  .price-row-label { color: #374151; }
-  .price-row-val { font-weight: 600; }
+    .cover-sub {
+      font-size: 16px;
+      color: rgba(255,255,255,0.65);
+      max-width: 500px;
+      line-height: 1.75;
+      margin-bottom: 36px;
+    }
 
-  /* ── Notification ── */
-  .notif-list { display: flex; flex-direction: column; gap: 12px; margin: 20px 0; }
-  .notif {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px 20px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-  .notif-icon-wrap { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-  .notif-body { flex: 1; }
-  .notif-title { font-size: 13px; font-weight: 700; color: var(--brand); }
-  .notif-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
-  .notif-who { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 600; flex-shrink: 0; }
+    .cover-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 24px;
+    }
 
-  /* ── Support ── */
-  .support-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 24px 0; }
-  .support-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px; text-align: center; }
-  .support-icon { font-size: 28px; margin-bottom: 8px; }
-  .support-title { font-size: 13px; font-weight: 700; color: var(--brand); margin-bottom: 4px; }
-  .support-sub { font-size: 12px; color: var(--muted); }
+    .cover-meta-item .label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
 
-  /* ── Footer ── */
-  .footer {
-    background: var(--brand);
-    color: white;
-    padding: 40px 60px;
-    text-align: center;
-  }
-  .footer-logo { font-size: 28px; font-weight: 900; margin-bottom: 8px; }
-  .footer-logo span { color: var(--accent); }
-  .footer-sub { font-size: 13px; color: rgba(255,255,255,0.5); }
+    .cover-meta-item .val {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--white);
+      margin-top: 2px;
+    }
 
-  /* ── Divider ── */
-  .divider { height: 1px; background: var(--border); margin: 40px 0; }
+    /* ══ MAIN LAYOUT ══ */
+    .page { max-width: 820px; margin: auto; padding: 0 24px; }
 
-  /* ── Chip ── */
-  .chip { display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 600; margin: 2px; }
-  .chip.green { background: #DCFCE7; color: #15803D; }
-  .chip.blue  { background: #DBEAFE; color: #1D4ED8; }
-  .chip.amber { background: #FEF3C7; color: #92400E; }
-  .chip.red   { background: #FEE2E2; color: #DC2626; }
-  .chip.gray  { background: #F1F5F9; color: #475569; }
+    /* ══ TOC ══ */
+    .toc {
+      background: var(--off);
+      border-bottom: 1px solid var(--border);
+      padding: 36px 40px;
+    }
 
-  @media print {
-    .section { break-inside: avoid; }
-  }
-</style>
+    .toc-inner { max-width: 820px; margin: auto; }
+
+    .toc-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .toc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 40px;
+    }
+
+    .toc-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--border);
+      font-size: 14px;
+      color: var(--black);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .toc-item:hover { color: var(--green); }
+
+    .toc-n {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 15px;
+      color: var(--green);
+      min-width: 22px;
+    }
+
+    /* ══ SECTION ══ */
+    .sec {
+      padding: 56px 0 0;
+      border-top: 1px solid var(--border);
+      margin-top: 48px;
+    }
+
+    .sec:first-child { border-top: none; margin-top: 48px; }
+
+    .sec-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--green);
+      background: var(--gd);
+      border: 1px solid var(--gb);
+      border-radius: 999px;
+      padding: 4px 12px;
+      margin-bottom: 14px;
+    }
+
+    .sec-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(34px, 5vw, 52px);
+      letter-spacing: 1.5px;
+      line-height: 1;
+      margin-bottom: 12px;
+      color: var(--black);
+    }
+
+    .sec-sub {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 580px;
+      line-height: 1.75;
+      margin-bottom: 32px;
+    }
+
+    /* ══ CARDS ══ */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+      transition: 0.25s;
+    }
+
+    .card:hover {
+      border-color: var(--gb);
+      box-shadow: 0 4px 20px rgba(34,197,94,0.08);
+    }
+
+    .card-icon {
+      font-size: 26px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: 6px;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ══ ROLE CARDS ══ */
+    .role-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .role-card {
+      border-radius: 18px;
+      padding: 22px;
+      border: 1.5px solid;
+    }
+
+    .role-card.you   { background: #F0FDF4; border-color: #BBF7D0; }
+    .role-card.op    { background: #FFFBEB; border-color: #FDE68A; }
+    .role-card.user  { background: #EFF6FF; border-color: #BFDBFE; }
+    .role-card.no    { background: #FFF1F2; border-color: #FECDD3; }
+    .role-card.black { background: var(--black); border-color: var(--black); color: var(--white); }
+
+    .role-icon { font-size: 28px; margin-bottom: 10px; }
+    .role-name { font-size: 15px; font-weight: 800; margin-bottom: 6px; }
+    .role-desc { font-size: 12px; color: var(--muted); line-height: 1.5; margin-bottom: 14px; }
+    .role-card.black .role-desc { color: rgba(255,255,255,0.55); }
+
+    .check-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .check-list li {
+      font-size: 12px;
+      color: #374151;
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      line-height: 1.4;
+    }
+    .check-list li .ck { color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .check-list li .xk { color: var(--red); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+    /* ══ STEPS ══ */
+    .steps { display: flex; flex-direction: column; gap: 14px; margin: 20px 0; }
+
+    .step {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      background: var(--off);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 18px;
+    }
+
+    .step-num {
+      width: 32px; height: 32px;
+      background: var(--black);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .step-body { flex: 1; }
+    .step-title { font-size: 14px; font-weight: 700; color: var(--black); margin-bottom: 3px; }
+    .step-desc  { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+    /* ══ FLOW ══ */
+    .flow {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin: 24px 0;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .flow-step {
+      background: var(--off);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      text-align: center;
+      flex: 1;
+      min-width: 100px;
+    }
+
+    .flow-step.dark  { background: var(--black); border-color: var(--black); }
+    .flow-step.green { background: var(--green); border-color: var(--green); }
+
+    .flow-step .fi { font-size: 20px; margin-bottom: 6px; }
+    .flow-step .fl { font-size: 11px; font-weight: 700; color: var(--black); line-height: 1.3; }
+    .flow-step.dark  .fl { color: var(--white); }
+    .flow-step.green .fl { color: #000; }
+    .flow-step .fs { font-size: 10px; color: var(--muted); margin-top: 2px; }
+    .flow-step.dark  .fs { color: rgba(255,255,255,0.5); }
+    .flow-step.green .fs { color: rgba(0,0,0,0.55); }
+
+    .flow-arr { color: #CBD5E1; font-size: 16px; padding: 0 6px; flex-shrink: 0; }
+
+    /* ══ TABLE ══ */
+    .tbl-wrap { overflow-x: auto; margin: 20px 0; border-radius: 14px; border: 1px solid var(--border); }
+
+    table { width: 100%; border-collapse: collapse; }
+
+    th {
+      background: var(--black);
+      color: var(--white);
+      padding: 12px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      text-align: left;
+    }
+
+    th:first-child { border-radius: 13px 0 0 0; }
+    th:last-child  { border-radius: 0 13px 0 0; }
+
+    td {
+      padding: 11px 16px;
+      font-size: 13px;
+      border-bottom: 1px solid var(--gray);
+      color: var(--black);
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--off); }
+
+    /* ══ INFO BOXES ══ */
+    .ibox {
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .ibox.green { background: #F0FDF4; border: 1px solid #BBF7D0; }
+    .ibox.amber { background: #FFFBEB; border: 1px solid #FDE68A; }
+    .ibox.blue  { background: #EFF6FF; border: 1px solid #BFDBFE; }
+    .ibox.dark  { background: var(--black); border: 1px solid var(--black); }
+
+    .ibox-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .ibox-title { font-size: 13px; font-weight: 700; color: var(--black); margin-bottom: 3px; }
+    .ibox.dark .ibox-title { color: var(--white); }
+    .ibox-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .ibox.dark .ibox-text { color: rgba(255,255,255,0.6); }
+
+    /* ══ CHIP ══ */
+    .chip {
+      display: inline-block;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+    .chip.g  { background: #DCFCE7; color: #15803D; }
+    .chip.b  { background: #DBEAFE; color: #1D4ED8; }
+    .chip.a  { background: #FEF3C7; color: #92400E; }
+    .chip.r  { background: #FEE2E2; color: #DC2626; }
+    .chip.gr { background: var(--gray); color: var(--muted); }
+
+    /* ══ NOTIF LIST ══ */
+    .notif-list { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+
+    .notif {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 18px;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .notif-ic {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .notif-body { flex: 1; }
+    .notif-title { font-size: 13px; font-weight: 700; color: var(--black); }
+    .notif-sub   { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.5; }
+    .notif-who   { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+
+    /* ══ CONTACT ══ */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin: 24px 0;
+    }
+
+    .contact-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+      text-align: center;
+      transition: 0.25s;
+    }
+
+    .contact-card:hover { border-color: var(--gb); }
+    .contact-card .ci { font-size: 30px; margin-bottom: 10px; }
+    .contact-card .ct { font-size: 14px; font-weight: 700; color: var(--black); margin-bottom: 4px; }
+    .contact-card .cv { font-size: 13px; color: var(--green); font-weight: 600; }
+    .contact-card .cs { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+    /* ══ PRICE EXAMPLE ══ */
+    .price-box {
+      background: #F0FDF4;
+      border: 1px solid #BBF7D0;
+      border-radius: 14px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+
+    .price-box-title { font-size: 13px; font-weight: 700; color: #15803D; margin-bottom: 14px; }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #D1FAE5;
+      font-size: 13px;
+    }
+
+    .price-row:last-child { border-bottom: none; font-weight: 700; color: #15803D; }
+    .price-row .prl { color: #374151; }
+    .price-row .prv { font-weight: 600; }
+
+    /* ══ DIVIDER ══ */
+    .divider { height: 1px; background: var(--border); margin: 32px 0; }
+
+    /* ══ FOOTER ══ */
+    footer {
+      background: var(--black);
+      color: var(--white);
+      padding: 44px 24px;
+      margin-top: 64px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 36px;
+      letter-spacing: 3px;
+      margin-bottom: 8px;
+    }
+
+    .footer-logo span { color: var(--green); }
+
+    footer p { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 6px; line-height: 1.7; }
+
+    footer a { color: var(--green); }
+
+    /* ══ RESPONSIVE ══ */
+    @media (max-width: 700px) {
+      .cover { padding: 48px 24px 40px; }
+      .toc { padding: 28px 24px; }
+      .toc-grid { grid-template-columns: 1fr; }
+      .role-grid { grid-template-columns: 1fr; }
+      .flow-step { min-width: 80px; padding: 10px 10px; }
+      .page { padding: 0 16px; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════════════
-     COVER
-══════════════════════════════════════════════════ -->
+<!-- ══ COVER ══ -->
 <div class="cover">
-  <div class="cover-tag">Platform Documentation · Version 1.0.2</div>
-  <div class="cover-title">Welcome to<br><span>Playon</span></div>
-  <div class="cover-sub">The complete guide for turf owners — everything you need to know about managing your turf, understanding bookings, and getting paid.</div>
-  <div class="cover-meta">
-    <div class="cover-meta-item">
-      <div class="cover-meta-label">App Name</div>
-      <div class="cover-meta-val">Playon</div>
+  <div class="cover-blob cover-blob-1"></div>
+  <div class="cover-blob cover-blob-2"></div>
+  <div class="cover-inner">
+    <div class="cover-logo">
+      <div class="logo-mark">P</div>
+      <span class="logo-name">PLAYON</span>
     </div>
-    <div class="cover-meta-item">
-      <div class="cover-meta-label">Package</div>
-      <div class="cover-meta-val">com.playonnew.app</div>
-    </div>
-    <div class="cover-meta-item">
-      <div class="cover-meta-label">Audience</div>
-      <div class="cover-meta-val">Turf Owners</div>
-    </div>
-    <div class="cover-meta-item">
-      <div class="cover-meta-label">Last Updated</div>
-      <div class="cover-meta-val">May 2026</div>
+    <div class="cover-tag">📖 Owner Guide · Version 1.0</div>
+    <h1 class="cover-title">TURF OWNER<br><span class="g">GUIDE.</span></h1>
+    <p class="cover-sub">Everything you need to know to get your turf listed, manage bookings, and get paid — in plain language.</p>
+    <div class="cover-meta">
+      <div class="cover-meta-item"><div class="label">Audience</div><div class="val">Turf Owners</div></div>
+      <div class="cover-meta-item"><div class="label">Updated</div><div class="val">May 2026</div></div>
+      <div class="cover-meta-item"><div class="label">Contact</div><div class="val">playonsport03@gmail.com</div></div>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════
-     TABLE OF CONTENTS
-══════════════════════════════════════════════════ -->
+<!-- ══ TOC ══ -->
 <div class="toc">
-  <h2>Contents</h2>
-  <div class="toc-grid">
-    <div class="toc-item"><span class="toc-num">01</span><span class="toc-label">What is Playon?</span></div>
-    <div class="toc-item"><span class="toc-num">02</span><span class="toc-label">The Four Roles</span></div>
-    <div class="toc-item"><span class="toc-num">03</span><span class="toc-label">How Bookings Work</span></div>
-    <div class="toc-item"><span class="toc-num">04</span><span class="toc-label">Payment System</span></div>
-    <div class="toc-item"><span class="toc-num">05</span><span class="toc-label">Your Owner Dashboard</span></div>
-    <div class="toc-item"><span class="toc-num">06</span><span class="toc-label">Revenue & Earnings</span></div>
-    <div class="toc-item"><span class="toc-num">07</span><span class="toc-label">Managing Your Turf</span></div>
-    <div class="toc-item"><span class="toc-num">08</span><span class="toc-label">Slot Blocking</span></div>
-    <div class="toc-item"><span class="toc-num">09</span><span class="toc-label">Notifications</span></div>
-    <div class="toc-item"><span class="toc-num">10</span><span class="toc-label">Turf Operators</span></div>
-    <div class="toc-item"><span class="toc-num">11</span><span class="toc-label">Cancellations & Refunds</span></div>
-    <div class="toc-item"><span class="toc-num">12</span><span class="toc-label">Support</span></div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════
-     01. WHAT IS PLAYON
-══════════════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-tag">Section 01</div>
-  <div class="section-title">What is Playon?</div>
-  <div class="section-sub">Playon is a sports turf booking platform that connects players with turf venues. Players discover, book, and pay for your turf — all through the app. You receive the booking, manage your schedule, and collect payment.</div>
-
-  <div class="feature-grid">
-    <div class="feature-card">
-      <div class="feature-icon">📱</div>
-      <div class="feature-title">Mobile-First App</div>
-      <div class="feature-desc">Available on Android. Players book directly from their phone 24/7, even when you're asleep.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">💳</div>
-      <div class="feature-title">Online Payments</div>
-      <div class="feature-desc">Secure payments via Razorpay — UPI, cards, net banking all supported. Money is tracked automatically.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">📅</div>
-      <div class="feature-title">Live Slot Calendar</div>
-      <div class="feature-desc">Real-time slot availability — when a player books a slot, it's instantly marked as taken for everyone.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🔔</div>
-      <div class="feature-title">Instant Notifications</div>
-      <div class="feature-desc">You get a push notification the moment a player books your turf — name, date, slot, and amount.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">📊</div>
-      <div class="feature-title">Revenue Dashboard</div>
-      <div class="feature-desc">See your earnings for the last 7, 15, or 30 days with a breakdown by turf and booking type.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🏟️</div>
-      <div class="feature-title">Multi-Turf Support</div>
-      <div class="feature-desc">Own multiple turfs? All of them appear under one owner account with separate tracking.</div>
+  <div class="toc-inner">
+    <div class="toc-label">What's in this guide</div>
+    <div class="toc-grid">
+      <a href="#s1" class="toc-item"><span class="toc-n">01</span> What is Playon?</a>
+      <a href="#s2" class="toc-item"><span class="toc-n">02</span> Getting Your Turf Listed</a>
+      <a href="#s3" class="toc-item"><span class="toc-n">03</span> How Bookings Work</a>
+      <a href="#s4" class="toc-item"><span class="toc-n">04</span> Payments Explained</a>
+      <a href="#s5" class="toc-item"><span class="toc-n">05</span> Your Dashboard</a>
+      <a href="#s6" class="toc-item"><span class="toc-n">06</span> Blocking Slots</a>
+      <a href="#s7" class="toc-item"><span class="toc-n">07</span> Operators</a>
+      <a href="#s8" class="toc-item"><span class="toc-n">08</span> Cancellations</a>
+      <a href="#s9" class="toc-item"><span class="toc-n">09</span> Notifications</a>
+      <a href="#s10" class="toc-item"><span class="toc-n">10</span> Contact & Support</a>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════
-     02. THE FOUR ROLES
-══════════════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-tag">Section 02</div>
-  <div class="section-title">The Four Roles</div>
-  <div class="section-sub">Playon has four types of accounts. Each sees a completely different screen when they log in.</div>
+<!-- ══ CONTENT ══ -->
+<div class="page">
 
-  <div class="role-grid">
-    <div class="role-card user">
-      <div class="role-icon">🏃</div>
-      <div class="role-name">Player (User)</div>
-      <div class="role-desc">Anyone who wants to book a turf. They browse venues, pick time slots, and pay online.</div>
-      <ul class="role-features">
-        <li>Browse all turfs on the Explore screen</li>
-        <li>See real-time slot availability</li>
-        <li>Book and pay via Razorpay</li>
-        <li>View and cancel their bookings</li>
-        <li>Contact support if needed</li>
-      </ul>
-    </div>
-    <div class="role-card owner">
-      <div class="role-icon">🏢</div>
-      <div class="role-name">Turf Owner (You)</div>
-      <div class="role-desc">The owner of the turf venue. You manage turf info, monitor bookings, and track revenue.</div>
-      <ul class="role-features">
-        <li>See today's and upcoming bookings</li>
-        <li>Track revenue with date filters</li>
-        <li>Edit turf details and pricing</li>
-        <li>Block specific slots</li>
-        <li>Assign an on-ground operator</li>
-        <li>Mark remaining payments as collected</li>
-      </ul>
-    </div>
-    <div class="role-card op">
-      <div class="role-icon">🎽</div>
-      <div class="role-name">Turf Operator</div>
-      <div class="role-desc">Your on-ground staff present at the turf. They see who's coming today and can block slots.</div>
-      <ul class="role-features">
-        <li>See today's bookings only</li>
-        <li>View player names and payment status</li>
-        <li>Block slots (maintenance, etc.)</li>
-        <li>Cannot see revenue or edit turf</li>
-      </ul>
-    </div>
-    <div class="role-card admin">
-      <div class="role-icon">⚙️</div>
-      <div class="role-name">Platform Admin</div>
-      <div class="role-desc">The Playon team. They add new turfs, manage owner accounts, and run the platform.</div>
-      <ul class="role-features">
-        <li>Add / remove / edit any turf</li>
-        <li>Manage all owner accounts</li>
-        <li>View all bookings across all turfs</li>
-        <li>Send platform-wide notifications</li>
-        <li>Manage promotional banners</li>
-      </ul>
-    </div>
-  </div>
+  <!-- 01 -->
+  <div class="sec" id="s1">
+    <div class="sec-tag">Section 01</div>
+    <h2 class="sec-title">WHAT IS PLAYON?</h2>
+    <p class="sec-sub">Playon lets players find and book sports turfs near them — instantly, from their phone. You list your turf, they book and pay online, and you manage everything from one simple app.</p>
 
-  <div class="info-box blue">
-    <div class="info-box-icon">ℹ️</div>
-    <div>
-      <div class="info-box-title">Your login</div>
-      <div class="info-box-text">The Playon admin creates your owner account and sends you your login email and password. Once you log in, the app automatically shows you the Owner screen — you don't need to select any role yourself.</div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════
-     03. HOW BOOKINGS WORK
-══════════════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-tag">Section 03</div>
-  <div class="section-title">How Bookings Work</div>
-  <div class="section-sub">From a player opening the app to you receiving the booking — here's exactly what happens at each step.</div>
-
-  <div class="flow">
-    <div class="flow-step">
-      <div class="flow-icon">🔍</div>
-      <div class="flow-label">Player browses</div>
-      <div class="flow-sub">Explore screen</div>
-    </div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-step">
-      <div class="flow-icon">📅</div>
-      <div class="flow-label">Picks slots</div>
-      <div class="flow-sub">Date + time selection</div>
-    </div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-step highlight">
-      <div class="flow-icon">💳</div>
-      <div class="flow-label">Pays online</div>
-      <div class="flow-sub">Via Razorpay</div>
-    </div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-step accent">
-      <div class="flow-icon">✅</div>
-      <div class="flow-label">Booking confirmed</div>
-      <div class="flow-sub">Slot locked instantly</div>
-    </div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-step green">
-      <div class="flow-icon">🔔</div>
-      <div class="flow-label">You're notified</div>
-      <div class="flow-sub">Push notification</div>
-    </div>
-  </div>
-
-  <div class="divider"></div>
-
-  <h3 style="font-size:18px;font-weight:800;color:var(--brand);margin-bottom:20px;">Booking Details You Receive</h3>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Field</th>
-        <th>Example</th>
-        <th>Notes</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>Player Name</td><td>Rahul Sharma</td><td>The name they signed up with</td></tr>
-      <tr><td>Booking Date</td><td>Wed, 14 May 2026</td><td>The date of play (not booking date)</td></tr>
-      <tr><td>Time Slots</td><td>6:00 AM – 7:00 AM</td><td>One or multiple 30-min slots</td></tr>
-      <tr><td>Turf Name</td><td>Green Arena</td><td>Which of your turfs was booked</td></tr>
-      <tr><td>Payment Type</td><td>Advance / Full</td><td>See Section 04</td></tr>
-      <tr><td>Total Amount</td><td>₹800</td><td>Full slot price</td></tr>
-      <tr><td>Paid Amount</td><td>₹400</td><td>Amount received online</td></tr>
-      <tr><td>Remaining</td><td>₹400</td><td>To be collected at venue</td></tr>
-      <tr><td>Status</td><td>Confirmed / Cancelled</td><td>Live status of the booking</td></tr>
-    </tbody>
-  </table>
-
-  <div class="info-box amber">
-    <div class="info-box-icon">⚠️</div>
-    <div>
-      <div class="info-box-title">Double-booking is not possible</div>
-      <div class="info-box-text">Once a player pays and confirms a slot, it is immediately locked. No other player can book the same slot on the same date. This is enforced by the server — not just the app.</div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════
-     04. PAYMENT SYSTEM
-══════════════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-tag">Section 04</div>
-  <div class="section-title">Payment System</div>
-  <div class="section-sub">Playon uses Razorpay — India's leading payment gateway. Players pay online; you collect any remaining amount at the turf.</div>
-
-  <div class="payment-flow">
-    <div class="payment-title">💳 How a payment flows</div>
-    <div class="payment-steps">
-      <div class="payment-step">
-        <div class="payment-num">1</div>
-        <div class="payment-step-label">Player selects slots</div>
-        <div class="payment-step-sub">App calculates total</div>
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">📱</span>
+        <div class="card-title">Players book 24/7</div>
+        <div class="card-desc">No calls needed. Players find your turf, pick a slot, and pay — even while you sleep.</div>
       </div>
-      <div class="payment-step">
-        <div class="payment-num">2</div>
-        <div class="payment-step-label">Razorpay opens</div>
-        <div class="payment-step-sub">UPI / Card / Net banking</div>
+      <div class="card">
+        <span class="card-icon">💳</span>
+        <div class="card-title">Online payments</div>
+        <div class="card-desc">Secure UPI, card, and net banking via Razorpay. Money is tracked automatically.</div>
       </div>
-      <div class="payment-step">
-        <div class="payment-num">3</div>
-        <div class="payment-step-label">Payment verified</div>
-        <div class="payment-step-sub">Server checks signature</div>
+      <div class="card">
+        <span class="card-icon">📅</span>
+        <div class="card-title">Live slot calendar</div>
+        <div class="card-desc">When a slot is booked, it's instantly marked as taken. No double-bookings, ever.</div>
       </div>
-      <div class="payment-step">
-        <div class="payment-num">4</div>
-        <div class="payment-step-label">Booking saved</div>
-        <div class="payment-step-sub">Slots locked in Firestore</div>
+      <div class="card">
+        <span class="card-icon">🔔</span>
+        <div class="card-title">Instant alerts</div>
+        <div class="card-desc">Get a push notification the moment someone books your turf — name, slot, amount.</div>
       </div>
-      <div class="payment-step">
-        <div class="payment-num">5</div>
-        <div class="payment-step-label">You get notified</div>
-        <div class="payment-step-sub">Instant push notification</div>
+      <div class="card">
+        <span class="card-icon">📊</span>
+        <div class="card-title">Revenue dashboard</div>
+        <div class="card-desc">See your earnings by day, week, or month. Track what's been paid and what to collect.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🏟️</span>
+        <div class="card-title">Multiple turfs</div>
+        <div class="card-desc">Own more than one turf? All of them are under one owner account, tracked separately.</div>
       </div>
     </div>
   </div>
 
-  <h3 style="font-size:18px;font-weight:800;color:var(--brand);margin:32px 0 16px;">Two Payment Types</h3>
+  <!-- 02 -->
+  <div class="sec" id="s2">
+    <div class="sec-tag">Section 02</div>
+    <h2 class="sec-title">GETTING YOUR TURF LISTED</h2>
+    <p class="sec-sub">You don't add the turf yourself — our team sets it up for you. Just send us the details below and we'll get you live within 24 hours.</p>
 
-  <div class="role-grid">
-    <div class="role-card owner" style="background:#F0FDF4;">
-      <div class="role-icon">💰</div>
-      <div class="role-name">Full Payment</div>
-      <div class="role-desc">Player pays the complete slot price online before arriving.</div>
-      <ul class="role-features">
-        <li>100% collected online via Razorpay</li>
-        <li>No remaining amount at venue</li>
-        <li>Status shows "Fully Paid"</li>
-        <li>Refundable if cancelled before 2 hours</li>
-      </ul>
-    </div>
-    <div class="role-card user" style="background:#EFF6FF;">
-      <div class="role-icon">🔖</div>
-      <div class="role-name">Advance Payment</div>
-      <div class="role-desc">Player pays a partial advance online and pays the rest at the turf.</div>
-      <ul class="role-features">
-        <li>Advance amount set by admin (e.g. ₹200)</li>
-        <li>Remaining collected at venue by you</li>
-        <li>You mark "Remaining Collected" in app</li>
-        <li>Only advance is refunded if cancelled</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="price-example">
-    <div class="price-title">💡 Example: Advance booking for 2 slots at ₹400/hr</div>
-    <div class="price-row"><span class="price-row-label">Slot price (2 × ₹400)</span><span class="price-row-val">₹800</span></div>
-    <div class="price-row"><span class="price-row-label">Advance paid online</span><span class="price-row-val">₹200</span></div>
-    <div class="price-row"><span class="price-row-label">Remaining (collect at venue)</span><span class="price-row-val">₹600</span></div>
-    <div class="price-row"><span class="price-row-label">Total you receive</span><span class="price-row-val">₹800</span></div>
-  </div>
-
-  <div class="info-box green">
-    <div class="info-box-icon">✅</div>
-    <div>
-      <div class="info-box-title">Marking remaining as collected</div>
-      <div class="info-box-text">In your Revenue screen, each advance booking shows a "Mark Collected" button. Once the player pays the remaining amount at the venue, tap this button to update the record. This keeps your revenue tracking accurate.</div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════
-     05. YOUR OWNER DASHBOARD
-══════════════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-tag">Section 05</div>
-  <div class="section-title">Your Owner Dashboard</div>
-  <div class="section-sub">When you log in as an owner, you see 4 main tabs at the bottom of the screen.</div>
-
-  <div class="mockup-row">
-    <div class="mockup">
-      <div class="mockup-header" style="background:#0B1220;">🏠 Home (Dashboard)</div>
-      <div class="mockup-body">
-        <div class="mockup-item">
-          <div class="mockup-dot" style="background:#22C55E;"></div>
-          <div class="mockup-text">Today's bookings count</div>
-          <div class="mockup-badge" style="background:#DCFCE7;color:#15803D;">Live</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Contact us with your turf details</div>
+          <div class="step-desc">WhatsApp or email us: turf name, location, sports, day/night price, opening hours, and photos. See Section 10 for contact info.</div>
         </div>
-        <div class="mockup-item">
-          <div class="mockup-dot" style="background:#0EA5A4;"></div>
-          <div class="mockup-text">Revenue this week</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">We create your owner account</div>
+          <div class="step-desc">We'll set up your login and send you an email + password. Download the Playon app and log in — it automatically shows you the Owner screen.</div>
         </div>
-        <div class="mockup-item">
-          <div class="mockup-dot" style="background:#F59E0B;"></div>
-          <div class="mockup-text">Pending remaining payments</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">We publish your turf listing</div>
+          <div class="step-desc">Your turf goes live in the app — players can discover it on the Explore screen, sorted by distance from them.</div>
         </div>
-        <div class="mockup-item">
-          <div class="mockup-dot" style="background:#6366F1;"></div>
-          <div class="mockup-text">Upcoming bookings list</div>
-        </div>
-        <div class="mockup-item">
-          <div class="mockup-dot" style="background:#EC4899;"></div>
-          <div class="mockup-text">Dark / Light mode toggle</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Bookings start coming in</div>
+          <div class="step-desc">Players book and pay. You get a notification for every booking. That's it — you're live.</div>
         </div>
       </div>
     </div>
 
-    <div class="mockup">
-      <div class="mockup-header" style="background:#0EA5A4;">📋 Bookings</div>
-      <div class="mockup-body">
-        <div class="mockup-item">
-          <div class="mockup-dot" style="background:#22C55E;"></div>
-          <div class="mockup-text">Today tab — bookings for today</div>
-          <div class="mockup-badge" style="background:#DCFCE7;color:#15803D;">Today</div>
-        </div>
-        <div class="mockup-item">
-          <div class="mockup-dot" style="background:#3B82F6;"></div>
-          <div class="mockup-text">Upcoming tab — future bookings</div>
-        </div>
-        <div class="mockup-item">
-          <div class="mockup-dot" style="background:#8B5CF6;"></div>
-          <div class="mockup-text">Past tab — completed bookings</div>
-        </div>
-        <div class="mockup-item">
-          <div class="mockup-dot" style="background:#F59E0B;"></div>
-          <div class="mockup-text">Player name, slot time, amount</div>
-        </div>
-        <div class="mockup-item">
-          <div class="mockup-dot" style="background:#EF4444;"></div>
-          <div class="mockup-text">Payment status badge</div>
-        </div>
-      </div>
+    <div class="divider"></div>
+
+    <h3 style="font-size:16px;font-weight:700;color:var(--black);margin-bottom:14px;">What We Need From You</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Info</th><th>Example</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Turf name</td><td>Green Arena</td><td>The name players see in the app</td></tr>
+          <tr><td>Location / area</td><td>Ravi Nagar, Amravati</td><td>City and area for distance sorting</td></tr>
+          <tr><td>Sports</td><td>Football, Cricket</td><td>Players can filter by sport</td></tr>
+          <tr><td>Day price (6 AM – 6 PM)</td><td>₹400/hr</td><td>Per hour rate for daytime slots</td></tr>
+          <tr><td>Night price (6 PM – 12 AM)</td><td>₹600/hr</td><td>Per hour rate for evening slots</td></tr>
+          <tr><td>Advance booking amount</td><td>₹200</td><td>What player pays online to confirm slot</td></tr>
+          <tr><td>Opening time</td><td>6:00 AM</td><td>Earliest slot available</td></tr>
+          <tr><td>Closing time</td><td>11:00 PM</td><td>Latest slot available</td></tr>
+          <tr><td>Turf photos</td><td>3–5 images</td><td>Good photos = more bookings</td></tr>
+          <tr><td>Google Maps link</td><td>maps.app.goo.gl/…</td><td>So players can navigate to you</td></tr>
+        </tbody>
+      </table>
     </div>
 
-    <div class="mockup">
-      <div class="mockup-header" style="background:#16A34A;">💰 Revenue</div>
-      <div class="mockup-body">
-        <div class="mockup-item">
-          <div class="mockup-dot" style="background:#22C55E;"></div>
-          <div class="mockup-text">Total earned (7d / 15d / 30d)</div>
-        </div>
-        <div class="mockup-item">
-          <div class="mockup-dot" style="background:#0EA5A4;"></div>
-          <div class="mockup-text">Online collected vs remaining</div>
-        </div>
-        <div class="mockup-item">
-          <div class="mockup-dot" style="background:#F59E0B;"></div>
-          <div class="mockup-text">Per-booking breakdown</div>
-        </div>
-        <div class="mockup-item">
-          <div class="mockup-dot" style="background:#6366F1;"></div>
-          <div class="mockup-text">Mark remaining as collected</div>
-        </div>
-        <div class="mockup-item">
-          <div class="mockup-dot" style="background:#EC4899;"></div>
-          <div class="mockup-text">Cancelled bookings shown</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="mockup">
-      <div class="mockup-header" style="background:#7C3AED;">👤 Profile</div>
-      <div class="mockup-body">
-        <div class="mockup-item">
-          <div class="mockup-dot" style="background:#22C55E;"></div>
-          <div class="mockup-text">Your name, email, phone</div>
-        </div>
-        <div class="mockup-item">
-          <div class="mockup-dot" style="background:#0EA5A4;"></div>
-          <div class="mockup-text">Business name & location</div>
-        </div>
-        <div class="mockup-item">
-          <div class="mockup-dot" style="background:#F59E0B;"></div>
-          <div class="mockup-text">View your turf listing</div>
-        </div>
-        <div class="mockup-item">
-          <div class="mockup-dot" style="background:#6366F1;"></div>
-          <div class="mockup-text">Operator info (if assigned)</div>
-        </div>
-        <div class="mockup-item">
-          <div class="mockup-dot" style="background:#EF4444;"></div>
-          <div class="mockup-text">Edit profile / Logout</div>
-        </div>
+    <div class="ibox amber">
+      <div class="ibox-icon">✏️</div>
+      <div>
+        <div class="ibox-title">Need to change something later?</div>
+        <div class="ibox-text">To update your price, hours, photos, or sports — just WhatsApp or email us. Changes go live immediately.</div>
       </div>
     </div>
   </div>
 
-  <div class="info-box blue">
-    <div class="info-box-icon">💡</div>
-    <div>
-      <div class="info-box-title">Dark Mode available</div>
-      <div class="info-box-text">Your Home dashboard has a Dark / Light mode toggle in the top right. Your preference is saved and remembered across app sessions.</div>
-    </div>
-  </div>
-</div>
+  <!-- 03 -->
+  <div class="sec" id="s3">
+    <div class="sec-tag">Section 03</div>
+    <h2 class="sec-title">HOW BOOKINGS WORK</h2>
+    <p class="sec-sub">From a player opening the app to you receiving the notification — here's the full journey in 5 steps.</p>
 
-<!-- ══════════════════════════════════════════════════
-     06. REVENUE & EARNINGS
-══════════════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-tag">Section 06</div>
-  <div class="section-title">Revenue & Earnings</div>
-  <div class="section-sub">The Revenue tab gives you a complete financial picture — how much has been collected, how much is pending at the venue, and which bookings are outstanding.</div>
-
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-body">
-        <div class="step-title">Choose your date range</div>
-        <div class="step-desc">Tap the date filter at the top — Last 7 Days, Last 15 Days, or Last 30 Days. The numbers update instantly.</div>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="fi">🔍</div>
+        <div class="fl">Player finds<br>your turf</div>
+        <div class="fs">Explore screen</div>
+      </div>
+      <div class="flow-arr">→</div>
+      <div class="flow-step">
+        <div class="fi">📅</div>
+        <div class="fl">Picks date<br>& slot</div>
+        <div class="fs">Live availability</div>
+      </div>
+      <div class="flow-arr">→</div>
+      <div class="flow-step dark">
+        <div class="fi">💳</div>
+        <div class="fl">Pays online</div>
+        <div class="fs">Via Razorpay</div>
+      </div>
+      <div class="flow-arr">→</div>
+      <div class="flow-step">
+        <div class="fi">✅</div>
+        <div class="fl">Slot locked<br>instantly</div>
+        <div class="fs">No double booking</div>
+      </div>
+      <div class="flow-arr">→</div>
+      <div class="flow-step green">
+        <div class="fi">🔔</div>
+        <div class="fl">You get<br>notified</div>
+        <div class="fs">Push notification</div>
       </div>
     </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-body">
-        <div class="step-title">Read the summary cards</div>
-        <div class="step-desc">Total Revenue = all confirmed bookings. Online Collected = paid via Razorpay. Remaining = advance bookings where you still need to collect at venue. Cancelled = refunded bookings.</div>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-body">
-        <div class="step-title">Scroll the booking list</div>
-        <div class="step-desc">Each booking card shows player name, date, slot, payment type, and amounts. Tap any card for full details.</div>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">4</div>
-      <div class="step-body">
-        <div class="step-title">Mark remaining as collected</div>
-        <div class="step-desc">For advance bookings, you'll see a green "Mark Collected" button. Once the player pays you at the turf, tap this. The booking updates to "fully collected" and won't appear in your pending list.</div>
-      </div>
-    </div>
-  </div>
 
-  <h3 style="font-size:16px;font-weight:800;color:var(--brand);margin:28px 0 12px;">Status Meanings</h3>
-  <table>
-    <thead><tr><th>Status</th><th>Meaning</th><th>Action Needed?</th></tr></thead>
-    <tbody>
-      <tr><td><span class="chip green">Confirmed</span></td><td>Booking is active, slot is locked</td><td>No — player is coming</td></tr>
-      <tr><td><span class="chip blue">Fully Paid</span></td><td>Player paid 100% online</td><td>No — nothing to collect</td></tr>
-      <tr><td><span class="chip amber">Advance Paid</span></td><td>Player paid advance, rest owed</td><td>Yes — collect remaining at venue</td></tr>
-      <tr><td><span class="chip green">Collected ✓</span></td><td>Remaining amount collected at venue</td><td>No — done</td></tr>
-      <tr><td><span class="chip red">Cancelled</span></td><td>Player cancelled, refund issued</td><td>No — automatically handled</td></tr>
-      <tr><td><span class="chip gray">Completed</span></td><td>Past booking, play date has passed</td><td>No</td></tr>
-    </tbody>
-  </table>
-</div>
+    <h3 style="font-size:15px;font-weight:700;color:var(--black);margin:24px 0 12px;">What the booking notification shows you</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Detail</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Player name</td><td>Rahul Sharma</td></tr>
+          <tr><td>Date of booking</td><td>Thu, 14 May 2026</td></tr>
+          <tr><td>Time slot(s)</td><td>6:00 AM – 7:00 AM</td></tr>
+          <tr><td>Payment type</td><td>Advance / Full</td></tr>
+          <tr><td>Amount paid online</td><td>₹200</td></tr>
+          <tr><td>Remaining to collect</td><td>₹400 (at venue)</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-<!-- ══════════════════════════════════════════════════
-     07. MANAGING YOUR TURF
-══════════════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-tag">Section 07</div>
-  <div class="section-title">Managing Your Turf</div>
-  <div class="section-sub">Your turf listing is what players see in the Explore screen. Keep it updated for maximum bookings.</div>
-
-  <h3 style="font-size:16px;font-weight:800;color:var(--brand);margin-bottom:16px;">What Players See on Your Turf Card</h3>
-
-  <div class="feature-grid">
-    <div class="feature-card">
-      <div class="feature-icon">🖼️</div>
-      <div class="feature-title">Turf Photos</div>
-      <div class="feature-desc">Multiple images shown in a gallery. First image is the cover photo. Use real, well-lit photos — they increase bookings significantly.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">📍</div>
-      <div class="feature-title">Name & Location</div>
-      <div class="feature-desc">Your turf name and area are shown on every card. Players use this to find turfs near them.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">⚽</div>
-      <div class="feature-title">Sports</div>
-      <div class="feature-desc">The sports your turf supports (Football, Cricket, etc.). Players filter by sport — make sure yours are listed correctly.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">💰</div>
-      <div class="feature-title">Pricing</div>
-      <div class="feature-desc">Day price (6 AM–6 PM) and Night price (6 PM–12 AM) shown on the card. Advance booking price is how much players pay online.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🕐</div>
-      <div class="feature-title">Opening Hours</div>
-      <div class="feature-desc">The hours your turf is available for booking. Slots are only shown within this window.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🟢</div>
-      <div class="feature-title">Live Slot Status</div>
-      <div class="feature-desc">Available (green), Booked (red), Blocked (yellow) slots shown in real-time so players know exactly what's free.</div>
-    </div>
-  </div>
-
-  <div class="info-box amber">
-    <div class="info-box-icon">✏️</div>
-    <div>
-      <div class="info-box-title">To edit your turf details</div>
-      <div class="info-box-text">Contact the Playon admin to update your turf name, pricing, opening hours, photos, or sports. These changes take effect immediately across the app. In a future update, you'll be able to edit some details yourself from the Profile tab.</div>
-    </div>
-  </div>
-
-  <h3 style="font-size:16px;font-weight:800;color:var(--brand);margin:28px 0 12px;">Pricing Guide</h3>
-  <table>
-    <thead><tr><th>Field</th><th>What it is</th><th>Who sets it</th></tr></thead>
-    <tbody>
-      <tr><td>Day Price</td><td>Price per hour from 6 AM to 6 PM</td><td>Admin (you decide, admin sets it)</td></tr>
-      <tr><td>Night Price</td><td>Price per hour from 6 PM to 12 AM</td><td>Admin (you decide, admin sets it)</td></tr>
-      <tr><td>Advance Price</td><td>How much player pays online to secure the slot</td><td>Admin (you decide, admin sets it)</td></tr>
-    </tbody>
-  </table>
-</div>
-
-<!-- ══════════════════════════════════════════════════
-     08. SLOT BLOCKING
-══════════════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-tag">Section 08</div>
-  <div class="section-title">Slot Blocking</div>
-  <div class="section-sub">Need to close specific time slots for maintenance, a private event, or any reason? You can block slots manually — blocked slots appear as yellow "Locked" chips to players and cannot be booked.</div>
-
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-body">
-        <div class="step-title">Go to Bookings tab → Block Slots</div>
-        <div class="step-desc">This is accessible from the Bookings screen in your owner dashboard.</div>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-body">
-        <div class="step-title">Select the date</div>
-        <div class="step-desc">Pick the date you want to block slots on using the date picker.</div>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-body">
-        <div class="step-title">Choose the time slot</div>
-        <div class="step-desc">Select the specific 30-minute slot(s) you want to lock. Already-booked slots cannot be blocked.</div>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">4</div>
-      <div class="step-body">
-        <div class="step-title">Confirm the block</div>
-        <div class="step-desc">The slot is immediately marked as "Locked" (yellow) for all players on the Explore screen.</div>
+    <div class="ibox green">
+      <div class="ibox-icon">✅</div>
+      <div>
+        <div class="ibox-title">Double-booking is not possible</div>
+        <div class="ibox-text">Once someone pays and confirms a slot, it is immediately locked server-side. No other player can book the same slot on the same date.</div>
       </div>
     </div>
   </div>
 
-  <div class="info-box green">
-    <div class="info-box-icon">✅</div>
-    <div>
-      <div class="info-box-title">Your operator can also block slots</div>
-      <div class="info-box-text">Your assigned turf operator has access to the same slot-blocking feature. This is useful when your operator is at the venue and needs to close a slot on the spot (e.g. maintenance issue, field damage).</div>
-    </div>
-  </div>
-</div>
+  <!-- 04 -->
+  <div class="sec" id="s4">
+    <div class="sec-tag">Section 04</div>
+    <h2 class="sec-title">PAYMENTS EXPLAINED</h2>
+    <p class="sec-sub">Players pay online via Razorpay (UPI, card, net banking). There are two payment types — Full and Advance.</p>
 
-<!-- ══════════════════════════════════════════════════
-     09. NOTIFICATIONS
-══════════════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-tag">Section 09</div>
-  <div class="section-title">Notifications</div>
-  <div class="section-sub">Playon sends you push notifications for every important event. Make sure notifications are enabled on your phone for the Playon app.</div>
-
-  <div class="notif-list">
-    <div class="notif">
-      <div class="notif-icon-wrap" style="background:#DCFCE7;">🎉</div>
-      <div class="notif-body">
-        <div class="notif-title">New Booking Received</div>
-        <div class="notif-sub">Sent instantly when a player successfully books and pays for a slot on your turf. Includes player name, date, slot time, and amount paid.</div>
+    <div class="role-grid">
+      <div class="role-card you">
+        <div class="role-icon">💰</div>
+        <div class="role-name">Full Payment</div>
+        <div class="role-desc">Player pays the entire slot amount online before arriving.</div>
+        <ul class="check-list">
+          <li><span class="ck">✓</span> 100% collected online</li>
+          <li><span class="ck">✓</span> Nothing to collect at venue</li>
+          <li><span class="ck">✓</span> Status shows "Fully Paid"</li>
+        </ul>
       </div>
-      <div class="notif-who" style="background:#DCFCE7;color:#15803D;">You get this</div>
-    </div>
-    <div class="notif">
-      <div class="notif-icon-wrap" style="background:#FEE2E2;">❌</div>
-      <div class="notif-body">
-        <div class="notif-title">Booking Cancelled</div>
-        <div class="notif-sub">Sent when a player cancels their booking. The slot becomes available again immediately. Refund is processed automatically.</div>
+      <div class="role-card user">
+        <div class="role-icon">🔖</div>
+        <div class="role-name">Advance Payment</div>
+        <div class="role-desc">Player pays a small advance online. You collect the rest at the turf.</div>
+        <ul class="check-list">
+          <li><span class="ck">✓</span> Advance collected online</li>
+          <li><span class="ck">✓</span> You collect remaining at venue</li>
+          <li><span class="ck">✓</span> Mark "Collected" in app when done</li>
+        </ul>
       </div>
-      <div class="notif-who" style="background:#FEE2E2;color:#DC2626;">You get this</div>
     </div>
-    <div class="notif">
-      <div class="notif-icon-wrap" style="background:#DBEAFE;">⏰</div>
-      <div class="notif-body">
-        <div class="notif-title">Booking Reminder (Day Before)</div>
-        <div class="notif-sub">Players receive a reminder notification the evening before their booking. This reduces no-shows at your turf.</div>
+
+    <div class="price-box">
+      <div class="price-box-title">💡 Example — Advance booking, 2 slots at ₹400/hr</div>
+      <div class="price-row"><span class="prl">Slot price (2 × ₹400)</span><span class="prv">₹800</span></div>
+      <div class="price-row"><span class="prl">Advance paid online by player</span><span class="prv">₹200</span></div>
+      <div class="price-row"><span class="prl">You collect at venue</span><span class="prv">₹600</span></div>
+      <div class="price-row"><span class="prl">Total you receive</span><span class="prv">₹800 ✓</span></div>
+    </div>
+
+    <div class="ibox blue">
+      <div class="ibox-icon">💡</div>
+      <div>
+        <div class="ibox-title">Marking remaining as collected</div>
+        <div class="ibox-text">In your Revenue screen, advance bookings show a green "Mark Collected" button. Once the player pays the rest at your turf, tap it. The record updates and it disappears from your pending list.</div>
       </div>
-      <div class="notif-who" style="background:#DBEAFE;color:#1D4ED8;">Player gets this</div>
     </div>
-    <div class="notif">
-      <div class="notif-icon-wrap" style="background:#FEF3C7;">📢</div>
-      <div class="notif-body">
-        <div class="notif-title">Platform Announcements</div>
-        <div class="notif-sub">The Playon admin can send you announcements — new features, maintenance windows, or important platform updates.</div>
+  </div>
+
+  <!-- 05 -->
+  <div class="sec" id="s5">
+    <div class="sec-tag">Section 05</div>
+    <h2 class="sec-title">YOUR DASHBOARD</h2>
+    <p class="sec-sub">When you log in as an owner, you see 4 main tabs at the bottom. Here's what each one does.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">🏠</span>
+        <div class="card-title">Home</div>
+        <div class="card-desc">Today's booking count, this week's revenue, pending remaining payments, upcoming bookings, and a 7-day slot overview with date picker.</div>
       </div>
-      <div class="notif-who" style="background:#FEF3C7;color:#92400E;">You get this</div>
+      <div class="card">
+        <span class="card-icon">📋</span>
+        <div class="card-title">Bookings</div>
+        <div class="card-desc">All your bookings in one place — Today, Upcoming, and Past tabs. See player name, slot time, payment type, and amount for each.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">💰</span>
+        <div class="card-title">Revenue</div>
+        <div class="card-desc">Filter by 7, 15, or 30 days. See total earned, amount collected online, and remaining to collect. Mark advance bookings as collected here.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">👤</span>
+        <div class="card-title">Profile</div>
+        <div class="card-desc">Your name, business info, and turf listing. View and manage your assigned operator. Edit your profile or log out.</div>
+      </div>
+    </div>
+
+    <h3 style="font-size:15px;font-weight:700;color:var(--black);margin:24px 0 12px;">Booking Status Meanings</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Status</th><th>What it means</th><th>Action needed?</th></tr></thead>
+        <tbody>
+          <tr><td><span class="chip g">Confirmed</span></td><td>Slot is locked, player is coming</td><td>No</td></tr>
+          <tr><td><span class="chip b">Fully Paid</span></td><td>Player paid 100% online</td><td>No — nothing to collect</td></tr>
+          <tr><td><span class="chip a">Advance Paid</span></td><td>Player owes remaining at venue</td><td>Yes — collect remaining</td></tr>
+          <tr><td><span class="chip g">Collected ✓</span></td><td>You've marked remaining as collected</td><td>No — done</td></tr>
+          <tr><td><span class="chip r">Cancelled</span></td><td>Player cancelled, refund issued</td><td>No — automatic</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
-  <div class="info-box amber">
-    <div class="info-box-icon">📵</div>
-    <div>
-      <div class="info-box-title">Notifications not arriving?</div>
-      <div class="info-box-text">Go to your phone Settings → Apps → Playon → Notifications and make sure they are turned ON. Also make sure you have an internet connection when the booking happens — notifications require connectivity to be delivered.</div>
+  <!-- 06 -->
+  <div class="sec" id="s6">
+    <div class="sec-tag">Section 06</div>
+    <h2 class="sec-title">BLOCKING SLOTS</h2>
+    <p class="sec-sub">Need to close a time slot for maintenance, a private event, or any reason? Block it manually — blocked slots show as "Locked" to players and can't be booked.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Go to Home → Block Slots</div>
+          <div class="step-desc">Find the Block Slots option from your Home or Bookings screen quick actions.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Select the date</div>
+          <div class="step-desc">Pick which date you want to block slots on.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Pick the time slot(s)</div>
+          <div class="step-desc">Choose which 30-minute slots to lock. Already-booked slots cannot be blocked.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Confirm — done instantly</div>
+          <div class="step-desc">The slot is immediately marked yellow "Locked" for all players on the Explore screen.</div>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
-<!-- ══════════════════════════════════════════════════
-     10. TURF OPERATORS
-══════════════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-tag">Section 10</div>
-  <div class="section-title">Turf Operators</div>
-  <div class="section-sub">A turf operator is your on-ground staff member who physically manages the turf. They get a separate login with limited access — only what they need to do their job.</div>
-
-  <div class="role-grid">
-    <div class="role-card owner">
-      <div class="role-icon">✅</div>
-      <div class="role-name">What Operators CAN do</div>
-      <div class="role-desc"></div>
-      <ul class="role-features">
-        <li>See today's bookings for this turf</li>
-        <li>See player name and contact</li>
-        <li>See payment status (paid / remaining)</li>
-        <li>Block specific time slots</li>
-        <li>View slot availability in real-time</li>
-      </ul>
-    </div>
-    <div class="role-card" style="background:#FEF2F2;border-color:#FECACA;">
-      <div class="role-icon">🚫</div>
-      <div class="role-name">What Operators CANNOT do</div>
-      <div class="role-desc"></div>
-      <ul class="role-features" style="--accent:#DC2626;">
-        <li style="color:#374151;">See revenue or earnings</li>
-        <li style="color:#374151;">Edit turf details or pricing</li>
-        <li style="color:#374151;">See past or future bookings</li>
-        <li style="color:#374151;">Access your profile or settings</li>
-        <li style="color:#374151;">Cancel or modify bookings</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="info-box blue">
-    <div class="info-box-icon">👤</div>
-    <div>
-      <div class="info-box-title">How to assign an operator</div>
-      <div class="info-box-text">Contact the Playon admin with your operator's name, email, and phone number. The admin will create their account and link them to your turf. Your operator then logs into the same Playon app with their own credentials and automatically sees the Operator screen.</div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════
-     11. CANCELLATIONS & REFUNDS
-══════════════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-tag">Section 11</div>
-  <div class="section-title">Cancellations & Refunds</div>
-  <div class="section-sub">Players can cancel their bookings themselves through the app. Refunds are handled automatically by the system — you don't need to do anything.</div>
-
-  <h3 style="font-size:16px;font-weight:800;color:var(--brand);margin-bottom:16px;">Cancellation Rules</h3>
-  <table>
-    <thead><tr><th>Scenario</th><th>Refund to Player</th><th>You Receive</th></tr></thead>
-    <tbody>
-      <tr><td>Cancelled more than 2 hours before slot</td><td>Full refund (100%)</td><td>₹0 for that booking</td></tr>
-      <tr><td>Advance booking cancelled early</td><td>Advance amount refunded</td><td>₹0 (no money collected yet)</td></tr>
-      <tr><td>Cancelled within 2 hours of slot</td><td>No refund (non-refundable)</td><td>Advance amount is kept</td></tr>
-      <tr><td>Past bookings (date already passed)</td><td>Cannot be cancelled</td><td>—</td></tr>
-    </tbody>
-  </table>
-
-  <div class="info-box green">
-    <div class="info-box-icon">♻️</div>
-    <div>
-      <div class="info-box-title">Cancelled slots re-open automatically</div>
-      <div class="info-box-text">When a player cancels, their slot is immediately freed up and becomes available for other players to book. You don't need to do anything — the system handles this automatically within seconds.</div>
+    <div class="ibox green">
+      <div class="ibox-icon">✅</div>
+      <div>
+        <div class="ibox-title">Your operator can block slots too</div>
+        <div class="ibox-text">If you have an on-ground operator, they can also block slots from their phone — useful when they spot a maintenance issue at the venue.</div>
+      </div>
     </div>
   </div>
 
-  <div class="info-box amber">
-    <div class="info-box-icon">⚠️</div>
-    <div>
-      <div class="info-box-title">Refunds take 5–7 business days</div>
-      <div class="info-box-text">Razorpay processes refunds back to the player's original payment method. This typically takes 5–7 business days depending on their bank. If a player asks about their refund, this is normal and expected.</div>
+  <!-- 07 -->
+  <div class="sec" id="s7">
+    <div class="sec-tag">Section 07</div>
+    <h2 class="sec-title">TURF OPERATORS</h2>
+    <p class="sec-sub">An operator is your on-ground staff member — the person physically present at the turf. They get their own login with limited, job-focused access.</p>
+
+    <div class="role-grid">
+      <div class="role-card you">
+        <div class="role-icon">✅</div>
+        <div class="role-name">Operators CAN</div>
+        <div class="role-desc"></div>
+        <ul class="check-list">
+          <li><span class="ck">✓</span> See today's bookings</li>
+          <li><span class="ck">✓</span> See player name and payment status</li>
+          <li><span class="ck">✓</span> Block time slots</li>
+          <li><span class="ck">✓</span> View live slot availability</li>
+        </ul>
+      </div>
+      <div class="role-card no">
+        <div class="role-icon">🚫</div>
+        <div class="role-name">Operators CANNOT</div>
+        <div class="role-desc"></div>
+        <ul class="check-list">
+          <li><span class="xk">✕</span> See your revenue or earnings</li>
+          <li><span class="xk">✕</span> Edit turf details or pricing</li>
+          <li><span class="xk">✕</span> See past or future bookings</li>
+          <li><span class="xk">✕</span> Cancel or modify bookings</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ibox blue">
+      <div class="ibox-icon">👤</div>
+      <div>
+        <div class="ibox-title">How to set up an operator</div>
+        <div class="ibox-text">Send us your operator's name, email, and phone number. We create their account and link it to your turf. They download the same Playon app, log in, and automatically see the Operator screen — no role selection needed.</div>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- ══════════════════════════════════════════════════
-     12. SUPPORT
-══════════════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-tag">Section 12</div>
-  <div class="section-title">Support</div>
-  <div class="section-sub">Need help? The Playon team is here for you. You can also raise a support ticket directly from within the app.</div>
+  <!-- 08 -->
+  <div class="sec" id="s8">
+    <div class="sec-tag">Section 08</div>
+    <h2 class="sec-title">CANCELLATIONS</h2>
+    <p class="sec-sub">Players can cancel their own bookings through the app. Refunds are processed automatically — you don't need to do anything.</p>
 
-  <div class="support-grid">
-    <div class="support-card">
-      <div class="support-icon">💬</div>
-      <div class="support-title">WhatsApp</div>
-      <div class="support-sub">Fastest response — usually under 1 hour during business hours</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Scenario</th><th>Player refund</th><th>You receive</th></tr></thead>
+        <tbody>
+          <tr><td>Cancelled 2+ hours before slot</td><td>Full refund (100%)</td><td>₹0</td></tr>
+          <tr><td>Cancelled within 2 hours of slot</td><td>No refund</td><td>Advance amount kept</td></tr>
+          <tr><td>Past bookings (date passed)</td><td>Cannot be cancelled</td><td>—</td></tr>
+        </tbody>
+      </table>
     </div>
-    <div class="support-card">
-      <div class="support-icon">📧</div>
-      <div class="support-title">Email</div>
-      <div class="support-sub">For detailed issues, billing questions, or account changes</div>
+
+    <div class="ibox green">
+      <div class="ibox-icon">♻️</div>
+      <div>
+        <div class="ibox-title">Cancelled slots re-open automatically</div>
+        <div class="ibox-text">When a player cancels, their slot is freed up within seconds — other players can book it immediately. Nothing for you to do.</div>
+      </div>
     </div>
-    <div class="support-card">
-      <div class="support-icon">📱</div>
-      <div class="support-title">In-App Support</div>
-      <div class="support-sub">Profile tab → Support. Raise a ticket and track its status from the app</div>
+
+    <div class="ibox amber">
+      <div class="ibox-icon">⏱️</div>
+      <div>
+        <div class="ibox-title">Refunds take 5–7 business days</div>
+        <div class="ibox-text">Razorpay processes refunds to the player's original payment method. If a player asks about their refund status, this is normal.</div>
+      </div>
     </div>
   </div>
 
-  <h3 style="font-size:16px;font-weight:800;color:var(--brand);margin:28px 0 16px;">Common Questions</h3>
-  <table>
-    <thead><tr><th>Question</th><th>Answer</th></tr></thead>
-    <tbody>
-      <tr><td>How do I update my turf's price?</td><td>Contact the Playon admin — pricing changes are applied immediately</td></tr>
-      <tr><td>Can I close my turf for a full day?</td><td>Yes — block all slots for that day via the Block Slots screen</td></tr>
-      <tr><td>A player says they paid but I see no booking</td><td>Contact support immediately with the player's name and payment time</td></tr>
-      <tr><td>How do I add a second turf?</td><td>Contact the admin — they'll add it under your same owner account</td></tr>
-      <tr><td>My operator forgot their password</td><td>Contact admin — they can reset operator credentials</td></tr>
-      <tr><td>When do I get my money?</td><td>Online payments go to Razorpay; settlement timelines depend on your Razorpay account setup</td></tr>
-    </tbody>
-  </table>
-</div>
+  <!-- 09 -->
+  <div class="sec" id="s9">
+    <div class="sec-tag">Section 09</div>
+    <h2 class="sec-title">NOTIFICATIONS</h2>
+    <p class="sec-sub">Make sure notifications are enabled for Playon on your phone. You'll get an alert for every important event.</p>
 
-<!-- ── FOOTER ── -->
-<div class="footer">
-  <div class="footer-logo">Play<span>on</span></div>
-  <div class="footer-sub">© 2026 Playon · com.playonnew.app · Version 1.0.2<br>This document is for turf owners. Contact the Playon admin for any changes to your account or turf listing.</div>
-</div>
+    <div class="notif-list">
+      <div class="notif">
+        <div class="notif-ic" style="background:#DCFCE7;">🎉</div>
+        <div class="notif-body">
+          <div class="notif-title">New Booking</div>
+          <div class="notif-sub">Sent the moment someone books and pays. Shows player name, date, slot, and amount paid.</div>
+        </div>
+        <div class="notif-who" style="background:#DCFCE7;color:#15803D;">You</div>
+      </div>
+      <div class="notif">
+        <div class="notif-ic" style="background:#FEE2E2;">❌</div>
+        <div class="notif-body">
+          <div class="notif-title">Booking Cancelled</div>
+          <div class="notif-sub">Player cancelled their booking. The slot reopens immediately.</div>
+        </div>
+        <div class="notif-who" style="background:#FEE2E2;color:#DC2626;">You</div>
+      </div>
+      <div class="notif">
+        <div class="notif-ic" style="background:#DBEAFE;">⏰</div>
+        <div class="notif-body">
+          <div class="notif-title">Reminder (Day Before)</div>
+          <div class="notif-sub">Players get a reminder the evening before their booking — reduces no-shows.</div>
+        </div>
+        <div class="notif-who" style="background:#DBEAFE;color:#1D4ED8;">Player</div>
+      </div>
+      <div class="notif">
+        <div class="notif-ic" style="background:#FEF3C7;">📢</div>
+        <div class="notif-body">
+          <div class="notif-title">Platform Updates</div>
+          <div class="notif-sub">Occasional announcements from the Playon team — new features, maintenance, etc.</div>
+        </div>
+        <div class="notif-who" style="background:#FEF3C7;color:#92400E;">You</div>
+      </div>
+    </div>
+
+    <div class="ibox amber">
+      <div class="ibox-icon">📵</div>
+      <div>
+        <div class="ibox-title">Not getting notifications?</div>
+        <div class="ibox-text">Go to phone Settings → Apps → Playon → Notifications → Make sure they are ON. Also check your internet connection.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10 -->
+  <div class="sec" id="s10">
+    <div class="sec-tag">Section 10</div>
+    <h2 class="sec-title">CONTACT &amp; SUPPORT</h2>
+    <p class="sec-sub">Need help, want to list your turf, or have a billing question? Reach out through any of these channels.</p>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="ci">💬</div>
+        <div class="ct">WhatsApp</div>
+        <div class="cv">+91 98908 44206</div>
+        <div class="cs">Fastest — usually under 1 hour</div>
+      </div>
+      <div class="contact-card">
+        <div class="ci">📧</div>
+        <div class="ct">Business Email</div>
+        <div class="cv">playonsport03@gmail.com</div>
+        <div class="cs">For turf listing &amp; account changes</div>
+      </div>
+      <div class="contact-card">
+        <div class="ci">📱</div>
+        <div class="ct">In-App Support</div>
+        <div class="cv">Profile → Support</div>
+        <div class="cs">Raise a ticket and track its status</div>
+      </div>
+    </div>
+
+    <h3 style="font-size:15px;font-weight:700;color:var(--black);margin:28px 0 12px;">Common Questions</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Question</th><th>Answer</th></tr></thead>
+        <tbody>
+          <tr><td>How do I change my turf price?</td><td>WhatsApp or email us — changes go live immediately</td></tr>
+          <tr><td>Can I close my turf for a full day?</td><td>Yes — block all slots for that day via Block Slots</td></tr>
+          <tr><td>A player paid but I see no booking</td><td>Contact us immediately with the player's name and payment time</td></tr>
+          <tr><td>How do I add a second turf?</td><td>Contact us — we'll add it under your existing account</td></tr>
+          <tr><td>My operator forgot their password</td><td>Contact us — we'll reset it for them</td></tr>
+          <tr><td>When do I receive my money?</td><td>Razorpay settles to your bank account per your Razorpay settings (usually T+2 days)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- end page -->
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-logo">PLAY<span>ON</span></div>
+  <p>The smart way to book sports turfs.</p>
+  <p style="margin-top:12px;">
+    📧 <a href="mailto:playonsport03@gmail.com">playonsport03@gmail.com</a>&nbsp;&nbsp;
+    💬 <a href="tel:+919890844206">+91 98908 44206</a>
+  </p>
+  <p style="margin-top:12px;">© 2026 Playon · Turf Owner Guide v1.0</p>
+</footer>
 
 </body>
 </html>
