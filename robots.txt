@@ -1,0 +1,10 @@
+# robots.txt for playon.fit
+
+User-agent: *
+Allow: /
+
+# Block private / account pages from search results (optional)
+Disallow: /delete-account
+
+# Sitemap location
+Sitemap: https://playon.fit/sitemap.xml

@@ -1,0 +1,318 @@
+
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; }
+.form-wrap { padding: 1.5rem 0; max-width: 620px; margin: 0 auto; }
+.form-header { text-align: center; margin-bottom: 2rem; }
+.form-logo { display: inline-flex; align-items: center; gap: 8px; background: #E1F5EE; border-radius: var(--border-radius-lg); padding: 8px 16px; margin-bottom: 14px; }
+.form-logo span { font-size: 14px; font-weight: 500; color: #085041; }
+.form-title { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 6px; }
+.form-sub { font-size: 14px; color: var(--color-text-secondary); margin: 0; }
+.section { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); background: var(--color-background-primary); padding: 1.25rem; margin-bottom: 1rem; }
+.section-head { display: flex; align-items: center; gap: 10px; margin-bottom: 1.25rem; padding-bottom: 10px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.section-icon { width: 32px; height: 32px; border-radius: var(--border-radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; }
+.si-blue { background: #E6F1FB; color: #185FA5; }
+.si-green { background: #EAF3DE; color: #3B6D11; }
+.si-amber { background: #FAEEDA; color: #854F0B; }
+.si-teal { background: #E1F5EE; color: #0F6E56; }
+.section-title { font-size: 15px; font-weight: 500; color: var(--color-text-primary); margin: 0; }
+.section-num { font-size: 11px; color: var(--color-text-tertiary); margin: 0; }
+.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.field-full { grid-column: 1 / -1; }
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field label { font-size: 12px; font-weight: 500; color: var(--color-text-secondary); }
+.field input, .field select, .field textarea { width: 100%; font-size: 13px; }
+.field textarea { resize: vertical; min-height: 70px; padding: 8px 10px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); background: var(--color-background-primary); color: var(--color-text-primary); font-family: var(--font-sans); }
+.field textarea:focus { outline: none; border-color: var(--color-border-primary); }
+.required { color: #E24B4A; margin-left: 2px; }
+.note { font-size: 11px; color: var(--color-text-tertiary); margin-top: 3px; }
+.upload-box { border: 0.5px dashed var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 1.5rem; text-align: center; background: var(--color-background-secondary); cursor: pointer; }
+.upload-box i { font-size: 24px; color: var(--color-text-tertiary); display: block; margin-bottom: 6px; }
+.upload-box p { margin: 0; font-size: 13px; color: var(--color-text-secondary); }
+.upload-box span { font-size: 11px; color: var(--color-text-tertiary); }
+.preview-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; }
+.preview-slot { aspect-ratio: 1; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-tertiary); background: var(--color-background-secondary); display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--color-text-tertiary); overflow: hidden; position: relative; }
+.preview-slot img { width: 100%; height: 100%; object-fit: cover; }
+.preview-slot .remove-btn { position: absolute; top: 3px; right: 3px; width: 18px; height: 18px; border-radius: 50%; background: #E24B4A; color: white; border: none; cursor: pointer; font-size: 10px; display: flex; align-items: center; justify-content: center; padding: 0; }
+.agree-box { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); background: var(--color-background-secondary); padding: 1rem 1.25rem; margin-bottom: 1rem; }
+.agree-row { display: flex; align-items: flex-start; gap: 10px; }
+.agree-row input[type=checkbox] { margin-top: 3px; flex-shrink: 0; }
+.agree-text { font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; }
+.agree-text strong { color: var(--color-text-primary); font-weight: 500; }
+.submit-btn { width: 100%; padding: 12px; font-size: 15px; font-weight: 500; border-radius: var(--border-radius-lg); background: #1D9E75; color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.submit-btn:hover { background: #0F6E56; }
+.submit-btn i { font-size: 18px; }
+.success-box { display: none; text-align: center; padding: 2rem; border: 0.5px solid #5DCAA5; border-radius: var(--border-radius-lg); background: #E1F5EE; }
+.success-box i { font-size: 40px; color: #0F6E56; display: block; margin-bottom: 12px; }
+.success-box h3 { margin: 0 0 6px; font-size: 18px; font-weight: 500; color: #085041; }
+.success-box p { margin: 0; font-size: 14px; color: #0F6E56; }
+.step-bar { display: flex; justify-content: center; gap: 6px; margin-bottom: 1.5rem; }
+.step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-border-secondary); }
+.step-dot.active { background: #1D9E75; width: 24px; border-radius: 4px; }
+</style>
+
+<div class="form-wrap">
+  <h2 class="sr-only">Turf partner onboarding form</h2>
+
+  <div class="form-header">
+    <div class="form-logo">
+      <i class="ti ti-ball-football" aria-hidden="true" style="font-size:18px; color:#0F6E56;"></i>
+      <span>Turf Partner Onboarding</span>
+    </div>
+    <p class="form-title">Register your turf with us</p>
+    <p class="form-sub">Fill in all details below. Takes about 5 minutes. <br>Fields marked <span style="color:#E24B4A;">*</span> are required.</p>
+  </div>
+
+  <div id="main-form">
+
+    <div class="section">
+      <div class="section-head">
+        <div class="section-icon si-blue"><i class="ti ti-user" aria-hidden="true"></i></div>
+        <div>
+          <p class="section-num">Section 1</p>
+          <p class="section-title">Owner personal details</p>
+        </div>
+      </div>
+      <div class="field-grid">
+        <div class="field field-full">
+          <label>Full name <span class="required">*</span></label>
+          <input type="text" id="owner-name" placeholder="e.g. Rahul Sharma" />
+        </div>
+        <div class="field">
+          <label>Email address <span class="required">*</span></label>
+          <input type="email" id="owner-email" placeholder="rahul@gmail.com" />
+        </div>
+        <div class="field">
+          <label>Phone number <span class="required">*</span></label>
+          <input type="tel" id="owner-phone" placeholder="+91 98765 43210" />
+        </div>
+        <div class="field field-full">
+          <label>Full address <span class="required">*</span></label>
+          <textarea id="owner-address" placeholder="House/flat no, street, area, city, pincode"></textarea>
+        </div>
+        <div class="field field-full">
+          <label>Business name <span class="required">*</span></label>
+          <input type="text" id="biz-name" placeholder="e.g. Sharma Sports Arena" />
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <div class="section-icon si-amber"><i class="ti ti-building-bank" aria-hidden="true"></i></div>
+        <div>
+          <p class="section-num">Section 2</p>
+          <p class="section-title">Bank account details</p>
+        </div>
+      </div>
+      <p class="note" style="margin: 0 0 14px; font-size:12px; color:var(--color-text-secondary);">Payouts will be transferred to this account. Please double-check before submitting.</p>
+      <div class="field-grid">
+        <div class="field field-full">
+          <label>Account holder name <span class="required">*</span></label>
+          <input type="text" id="bank-name" placeholder="Name as on bank account" />
+        </div>
+        <div class="field">
+          <label>Bank account number <span class="required">*</span></label>
+          <input type="text" id="bank-acc" placeholder="e.g. 012345678901" />
+        </div>
+        <div class="field">
+          <label>Confirm account number <span class="required">*</span></label>
+          <input type="text" id="bank-acc2" placeholder="Re-enter account number" />
+        </div>
+        <div class="field">
+          <label>IFSC code <span class="required">*</span></label>
+          <input type="text" id="ifsc" placeholder="e.g. SBIN0001234" style="text-transform:uppercase;" />
+        </div>
+        <div class="field">
+          <label>Bank name</label>
+          <input type="text" id="bank-bankname" placeholder="e.g. State Bank of India" />
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <div class="section-icon si-green"><i class="ti ti-map-pin" aria-hidden="true"></i></div>
+        <div>
+          <p class="section-num">Section 3</p>
+          <p class="section-title">Turf details</p>
+        </div>
+      </div>
+      <div class="field-grid">
+        <div class="field field-full">
+          <label>Turf name <span class="required">*</span></label>
+          <input type="text" id="turf-name" placeholder="e.g. Green Field Cricket Arena" />
+        </div>
+        <div class="field field-full">
+          <label>Turf location / address <span class="required">*</span></label>
+          <textarea id="turf-location" placeholder="Full address of the turf with landmark"></textarea>
+        </div>
+        <div class="field">
+          <label>Sport type <span class="required">*</span></label>
+          <select id="sport-type">
+            <option value="">Select sport</option>
+            <option>Cricket</option>
+            <option>Football</option>
+            <option>Pickleball</option>
+            <option>Cricket + Football</option>
+            <option>All sports</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Opening time <span class="required">*</span></label>
+          <input type="time" id="open-time" />
+        </div>
+        <div class="field">
+          <label>Closing time <span class="required">*</span></label>
+          <input type="time" id="close-time" />
+        </div>
+        <div class="field">
+          <label>Day slot price (₹) <span class="required">*</span></label>
+          <input type="number" id="day-price" placeholder="e.g. 800" min="0" />
+          <span class="note">Price per slot during daytime</span>
+        </div>
+        <div class="field">
+          <label>Night slot price (₹) <span class="required">*</span></label>
+          <input type="number" id="night-price" placeholder="e.g. 1200" min="0" />
+          <span class="note">Price per slot after sunset</span>
+        </div>
+        <div class="field">
+          <label>Slot duration</label>
+          <select id="slot-dur">
+            <option value="">Select duration</option>
+            <option>1 hour</option>
+            <option>1.5 hours</option>
+            <option>2 hours</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Turf size</label>
+          <input type="text" id="turf-size" placeholder="e.g. 22 yards, 5-a-side" />
+        </div>
+      </div>
+
+      <div style="margin-top: 1.25rem;">
+        <label style="font-size:12px; font-weight:500; color:var(--color-text-secondary); display:block; margin-bottom:8px;">Turf photos <span class="required">*</span> <span style="font-weight:400; color:var(--color-text-tertiary);">(min 2, max 4 images)</span></label>
+        <div class="upload-box" id="upload-box" onclick="document.getElementById('img-input').click()">
+          <i class="ti ti-photo-up" aria-hidden="true"></i>
+          <p>Tap to upload turf photos</p>
+          <span>JPG or PNG, max 5MB each</span>
+        </div>
+        <input type="file" id="img-input" accept="image/*" multiple style="display:none;" />
+        <div class="preview-grid" id="preview-grid"></div>
+        <p class="note" id="img-count-note" style="margin-top:6px;"></p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <div class="section-icon si-teal"><i class="ti ti-id-badge" aria-hidden="true"></i></div>
+        <div>
+          <p class="section-num">Section 4</p>
+          <p class="section-title">Turf operator details</p>
+        </div>
+      </div>
+      <p class="note" style="margin: 0 0 14px; font-size:12px; color:var(--color-text-secondary);">Person who manages day-to-day turf operations (can be same as owner)</p>
+      <div class="field-grid">
+        <div class="field field-full">
+          <label>Operator full name <span class="required">*</span></label>
+          <input type="text" id="op-name" placeholder="e.g. Amit Patil" />
+        </div>
+        <div class="field">
+          <label>Operator email <span class="required">*</span></label>
+          <input type="email" id="op-email" placeholder="amit@gmail.com" />
+        </div>
+        <div class="field">
+          <label>Operator phone <span class="required">*</span></label>
+          <input type="tel" id="op-phone" placeholder="+91 98765 43210" />
+        </div>
+      </div>
+    </div>
+
+    <div class="agree-box">
+      <div class="agree-row">
+        <input type="checkbox" id="agree-check" />
+        <p class="agree-text">I agree to the <strong>3% commission for the first month</strong> and <strong>5% commission from month 2 onwards</strong> per slot booking made through the app. I confirm all the above information is accurate and I authorize the use of the provided bank details for payouts.</p>
+      </div>
+    </div>
+
+    <button class="submit-btn" onclick="submitForm()">
+      <i class="ti ti-send" aria-hidden="true"></i>
+      Submit registration
+    </button>
+
+    <p style="text-align:center; font-size:12px; color:var(--color-text-tertiary); margin-top:12px;">After submission, our team will contact you within 24 hours to confirm your listing.</p>
+  </div>
+
+  <div class="success-box" id="success-box">
+    <i class="ti ti-circle-check" aria-hidden="true"></i>
+    <h3>Registration submitted!</h3>
+    <p>Thank you! Our team will review your details and contact you within 24 hours on your registered phone number.</p>
+  </div>
+</div>
+
+<script>
+const images = [];
+
+document.getElementById('img-input').addEventListener('change', function(e) {
+  const files = Array.from(e.target.files);
+  files.forEach(file => {
+    if (images.length >= 4) return;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      images.push(ev.target.result);
+      renderPreviews();
+    };
+    reader.readAsDataURL(file);
+  });
+  this.value = '';
+});
+
+function renderPreviews() {
+  const grid = document.getElementById('preview-grid');
+  const note = document.getElementById('img-count-note');
+  grid.innerHTML = '';
+  images.forEach((src, i) => {
+    const slot = document.createElement('div');
+    slot.className = 'preview-slot';
+    slot.innerHTML = '<img src="' + src + '" alt="Turf photo ' + (i+1) + '" /><button class="remove-btn" onclick="removeImg(' + i + ')" aria-label="Remove photo"><i class="ti ti-x" style="font-size:10px;"></i></button>';
+    grid.appendChild(slot);
+  });
+  if (images.length < 4) {
+    const add = document.createElement('div');
+    add.className = 'preview-slot';
+    add.style.cursor = 'pointer';
+    add.innerHTML = '<i class="ti ti-plus" style="font-size:18px;"></i>';
+    add.onclick = () => document.getElementById('img-input').click();
+    grid.appendChild(add);
+  }
+  note.textContent = images.length + ' of 4 photos added' + (images.length < 2 ? ' (minimum 2 required)' : '');
+  note.style.color = images.length < 2 ? '#E24B4A' : '#3B6D11';
+}
+
+function removeImg(i) {
+  images.splice(i, 1);
+  renderPreviews();
+}
+
+function submitForm() {
+  const required = ['owner-name','owner-email','owner-phone','owner-address','biz-name','bank-name','bank-acc','bank-acc2','ifsc','turf-name','turf-location','open-time','close-time','day-price','night-price','op-name','op-email','op-phone'];
+  let missing = false;
+  required.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el.value.trim()) { el.style.borderColor = '#E24B4A'; missing = true; }
+    else el.style.borderColor = '';
+  });
+  if (document.getElementById('sport-type').value === '') { document.getElementById('sport-type').style.borderColor = '#E24B4A'; missing = true; }
+  if (missing) { alert('Please fill in all required fields.'); return; }
+  const acc = document.getElementById('bank-acc').value;
+  const acc2 = document.getElementById('bank-acc2').value;
+  if (acc !== acc2) { alert('Bank account numbers do not match. Please check.'); return; }
+  if (images.length < 2) { alert('Please upload at least 2 turf photos.'); return; }
+  if (!document.getElementById('agree-check').checked) { alert('Please agree to the commission terms to proceed.'); return; }
+  document.getElementById('main-form').style.display = 'none';
+  document.getElementById('success-box').style.display = 'block';
+}
+
+renderPreviews();
+</script>
